@@ -1,2 +1,10 @@
-package com.megadev.scoca.config.menu.furnace;public class FurnaceManager {
+package com.megadev.scoca.config.menu.furnace;
+
+import com.megadev.scoca.config.Manager;
+import org.bukkit.plugin.Plugin;
+
+public class FurnaceManager extends Manager {
+    public FurnaceManager(Plugin plugin, String dataFolder) {
+        super(plugin, dataFolder);
+    }
 }

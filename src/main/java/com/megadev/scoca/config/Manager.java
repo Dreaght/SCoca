@@ -1,2 +1,36 @@
-package com.megadev.scoca.config;public interface Manager {
+package com.megadev.scoca.config;
+
+import org.bukkit.plugin.Plugin;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class Manager implements Config {
+    private final Plugin plugin;
+    private final String dataFolder;
+    private final Map<Class<? extends Config>, Config> configMap;
+
+    public Manager(Plugin plugin, String dataFolder) {
+        this.plugin = plugin;
+        this.dataFolder = dataFolder;
+        this.configMap = new HashMap<>();
+    }
+
+    protected void addConfig(Class<? extends Config> configClass, Config config) {
+        configMap.put(configClass, config);
+    }
+
+    public <T extends Config> T getConfig(Class<T> configClass) {
+        Config config = configMap.get(configClass);
+
+        if (config != null) {
+            if (config instanceof Manager) {
+                return ((Manager) config).getConfig(configClass);
+            } else {
+                return configClass.cast(config);
+            }
+        }
+
+        throw new IllegalArgumentException("No configuration found for class: " + configClass.getName());
+    }
 }

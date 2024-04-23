@@ -1,1 +1,2 @@
-menu: menu/furnace/default.yml
+steps:
+  menu: menu/furnace/default.yml

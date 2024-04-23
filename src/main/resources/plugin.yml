@@ -1,4 +1,5 @@
 name: SCoca
 version: '${version}'
+author: Dreaght
 main: com.megadev.scoca.SCoca
 api-version: '1.17'

@@ -1,3 +1,4 @@
-Effect.SMTHING: [0, 0, 0]
-Effect.SMTHING_2: [0, -1, 0]
-  - Effect.SMTHING_3: [1, 0, 1]
+steps:
+  - REDSTONE: [ 0, 0, 0 ]
+  - REDSTONE: [ 0, -1, 0 ]
+  - REDSTONE: [ 1, 0, 1 ]
