@@ -1,0 +1,4 @@
+name: SCoca
+version: '${version}'
+main: com.megadev.scoca.SCoca
+api-version: '1.17'
