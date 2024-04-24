@@ -1,0 +1,4 @@
+steps:
+  - REDSTONE: [ 0, 0, 0 ]
+  - REDSTONE: [ 0, -1, 0 ]
+  - REDSTONE: [ 1, 0, 1 ]

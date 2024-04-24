@@ -21,6 +21,25 @@ public abstract class Manager implements Config {
     }
 
     public <T extends Config> T getConfig(Class<T> configClass) {
+        T config = getConfigFromMap(configClass);
+
+        if (config != null) {
+            return config;
+        }
+
+        for (Config managerConfig : configMap.values()) {
+            if (managerConfig instanceof Manager) {
+                config = ((Manager) managerConfig).getConfig(configClass);
+                if (config != null) {
+                    return config;
+                }
+            }
+        }
+
+        throw new IllegalArgumentException("No configuration found for class: " + configClass.getName());
+    }
+
+    private <T extends Config> T getConfigFromMap(Class<T> configClass) {
         Config config = configMap.get(configClass);
 
         if (config != null) {
@@ -31,6 +50,6 @@ public abstract class Manager implements Config {
             }
         }
 
-        throw new IllegalArgumentException("No configuration found for class: " + configClass.getName());
+        return null;
     }
 }

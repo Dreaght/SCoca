@@ -1,27 +1,39 @@
 package com.megadev.scoca.config;
 
 import com.megadev.scoca.config.menu.MenuManager;
-import lombok.Getter;
 import org.bukkit.plugin.Plugin;
 
 public class ConfigManager extends Manager {
-    @Getter private static ConfigManager instance;
+    private static volatile ConfigManager instance;
 
     private ConfigManager(Plugin plugin) {
         super(plugin, ".");
+        addConfigSafely(MenuManager.class, new MenuManager(plugin, "menu"));
+        addConfigSafely(SettingsConfig.class, new SettingsConfig(plugin, "config"));
+        addConfigSafely(MenuConfig.class, new MenuConfig(plugin, "menu"));
+        addConfigSafely(BoilConfig.class, new BoilConfig(plugin, "boil"));
+        addConfigSafely(ItemsConfig.class, new ItemsConfig(plugin, "items"));
+        addConfigSafely(MessagesConfig.class, new MessagesConfig(plugin, "message"));
+    }
 
-        addConfig(MenuManager.class, new MenuManager(plugin, "menu"));
-
-        addConfig(SettingsConfig.class, new SettingsConfig(plugin, "settings"));
-        addConfig(MenuConfig.class, new MenuConfig(plugin, "menu"));
-        addConfig(BoilConfig.class, new BoilConfig(plugin, "boil"));
-        addConfig(ItemsConfig.class, new ItemsConfig(plugin, "items"));
-        addConfig(MessagesConfig.class, new MessagesConfig(plugin, "message"));
+    public static synchronized ConfigManager getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("ConfigManager has not been initialized. Call init() first.");
+        }
+        return instance;
     }
 
     public static void init(Plugin plugin) {
         if (instance == null) {
-            instance = new ConfigManager(plugin);
+            synchronized (ConfigManager.class) {
+                if (instance == null) {
+                    instance = new ConfigManager(plugin);
+                }
+            }
         }
+    }
+
+    public synchronized <T extends Config> void addConfigSafely(Class<T> configClass, T config) {
+        addConfig(configClass, config);
     }
 }

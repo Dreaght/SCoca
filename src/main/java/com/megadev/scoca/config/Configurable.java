@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -37,9 +38,9 @@ public abstract class Configurable implements Config {
 
         this.configFile = new File(subFolder, fileName + ".yml");
 
-        saveResource(fileName);
-
+        saveResource();
         this.config = getConfig();
+        saveConfig();
     }
 
     /**
@@ -101,30 +102,27 @@ public abstract class Configurable implements Config {
         }
     }
 
-    private void saveResource(String fileName) {
-        if (plugin.getResource(fileName + ".yml") != null) {
-            plugin.saveResource(fileName + ".yml", false);
-        } else {
+    private void saveResource() {
+        String filePath = configFile.getPath();
+
+        InputStream inputStream = plugin.getResource(filePath);
+
+        if (inputStream == null) {
+            configFile.getParentFile().mkdirs();
+
             try {
-                configFile.getParentFile().mkdirs();
                 configFile.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                plugin.getLogger().warning("Failed to save resource: " + configFile.getPath());
             }
         }
+
+        plugin.saveResource(filePath, false);
+        plugin.saveConfig();
     }
 
     private FileConfiguration getConfig() {
-        if (!configFile.exists()) {
-            try {
-                configFile.createNewFile();
-                config = new YamlConfiguration();
-                config.options().copyDefaults(true);
-                saveConfig();
-            } catch (IOException e) {
-                plugin.getLogger().warning("Failed to create configuration file: " + configFile.getName());
-            }
-        }
+        plugin.getConfig().options().copyDefaults(true);
 
         YamlConfiguration yamlConfig = new YamlConfiguration();
         try {

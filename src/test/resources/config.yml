@@ -1,0 +1,5 @@
+permissions:
+  furnace-use: "swizrp.furnace"
+  furnace-give: "swizrp.furnace.give"
+  boiler-use: "swizrp.boiler.give"
+  boiler-give: "swizrp.boiler.give"

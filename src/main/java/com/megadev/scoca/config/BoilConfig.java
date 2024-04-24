@@ -9,6 +9,6 @@ public class BoilConfig extends Configurable {
     }
 
     public void test() {
-
+        System.out.println("test passed");
     }
 }

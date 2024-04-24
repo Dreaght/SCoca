@@ -1,0 +1,8 @@
+title: "&8Furnace"
+
+# Slot ID can be from 0 to 54
+# See "menu.yml" to choice right pattern or add custom.
+# slot_id: <pattern name>.
+
+slots:
+  13: "salt"
