@@ -19,88 +19,31 @@ public abstract class Configurable implements Config {
     protected File configFile;
     protected File parentFolder;
 
-    /**
-     * Constructs a new Configurable object.
-     *
-     * @param plugin        The plugin instance.
-     * @param fileName      The name of the configuration file.
-     */
-    protected Configurable(@NotNull Plugin plugin, String fileName) {
-        this(plugin, new File(""), fileName);
-    }
-
-    /**
-     * Constructs a new Configurable object with subfolder name.
-     *
-     * @param plugin        The plugin instance.
-     * @param subFolderName The name of the subfolder where the configuration file will be stored.
-     * @param fileName      The name of the configuration file.
-     */
-    protected Configurable(@NotNull Plugin plugin, String subFolderName, String fileName) {
-        this(plugin, new File(subFolderName), fileName);
-    }
-
-    /**
-     * Constructs a new Configurable object with subfolder.
-     *
-     * @param plugin        The plugin instance.
-     * @param subFolder     The subFolder where the configuration file will be stored.
-     * @param fileName      The name of the configuration file.
-     */
-    protected Configurable(@NotNull Plugin plugin, File subFolder, String fileName) {
+    protected Configurable(@NotNull Plugin plugin, String... path) {
         this.plugin = plugin;
-        this.parentFolder = new File(plugin.getDataFolder(), subFolder.getPath());
-
-        saveResource(subFolder, fileName);
-
+        this.parentFolder = new File(plugin.getDataFolder(), String.join(File.separator, path));
+        saveResource(path);
         this.config = getConfig();
         saveConfig();
     }
 
-    /**
-     * Retrieves a string value from the configuration.
-     *
-     * @param path The path to the value.
-     * @return The string value.
-     */
     public String getString(String path) {
         return getConfig().getString(path);
     }
 
-    /**
-     * Retrieves a value from the configuration.
-     *
-     * @param path The path to the value.
-     * @return The value.
-     */
     public Object getValue(String path) {
         return getConfig().get(path);
     }
 
-    /**
-     * Retrieves a list of strings from the configuration.
-     *
-     * @param path The path to the list.
-     * @return The list of strings.
-     */
     public List<String> getStringList(String path) {
         return getConfig().getStringList(path);
     }
 
-    /**
-     * Sets a string value in the configuration.
-     *
-     * @param key   The key to set.
-     * @param value The value to set.
-     */
     public void setValue(String key, String value) {
         getConfig().set(key, value);
         saveConfig();
     }
 
-    /**
-     * Deletes the configuration file.
-     */
     public void deleteConfig() {
         if (configFile.exists()) {
             configFile.delete();
@@ -116,44 +59,17 @@ public abstract class Configurable implements Config {
         }
     }
 
-    private void saveResource(File subFolder, String fileName) {
-        subFolder.mkdirs();
-
-        String filePath = fileName + ".yml";
-        this.configFile = new File(parentFolder, filePath);
-
-        File fileFrom = new File(subFolder, filePath);
-        String pathFileFrom = fileFrom.getPath();
-
-        if (pathFileFrom.startsWith("\\"))
-            pathFileFrom = pathFileFrom.replaceFirst("\\\\", "");
-
-        saveResource(pathFileFrom);
-    }
-
-    private void saveResource(String fileFromPath) {
-        if (plugin.getResource(fileFromPath) == null) {
-            configFile.getParentFile().mkdirs();
-
-            try {
-                configFile.createNewFile();
-            } catch (IOException e) {
-                plugin.getLogger().warning("Failed to save resource: " + configFile.getPath());
-            }
+    private void saveResource(String... path) {
+        String filePath = String.join("/", path) + ".yml";
+        File file = new File(plugin.getDataFolder(), filePath);
+        if (!file.exists()) {
+            plugin.saveResource(filePath, true);
         }
-
-        try {
-            plugin.saveResource(fileFromPath, true);
-        } catch (IllegalArgumentException e) {
-            plugin.getLogger().warning("Failed to find resource: " + fileFromPath);
-        }
-
-        plugin.saveConfig();
+        this.configFile = file;
     }
 
     private FileConfiguration getConfig() {
         plugin.getConfig().options().copyDefaults(true);
-
         YamlConfiguration yamlConfig = new YamlConfiguration();
         try {
             yamlConfig.load(configFile);
