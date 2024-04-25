@@ -13,7 +13,7 @@ public class ConfigManager extends Manager {
         addConfigSafely(MenuConfig.class, new MenuConfig(plugin, "menu"));
         addConfigSafely(BoilConfig.class, new BoilConfig(plugin, "boil"));
         addConfigSafely(ItemsConfig.class, new ItemsConfig(plugin, "items"));
-        addConfigSafely(MessagesConfig.class, new MessagesConfig(plugin, "message"));
+        addConfigSafely(MessagesConfig.class, new MessagesConfig(plugin, "messages"));
     }
 
     public static synchronized ConfigManager getInstance() {

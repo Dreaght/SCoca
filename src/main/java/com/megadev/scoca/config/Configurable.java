@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -18,27 +17,42 @@ public abstract class Configurable implements Config {
     protected Plugin plugin;
     protected FileConfiguration config;
     protected File configFile;
-    protected File subFolder;
+    protected File parentFolder;
 
     /**
      * Constructs a new Configurable object.
+     *
+     * @param plugin        The plugin instance.
+     * @param fileName      The name of the configuration file.
+     */
+    protected Configurable(@NotNull Plugin plugin, String fileName) {
+        this(plugin, new File(""), fileName);
+    }
+
+    /**
+     * Constructs a new Configurable object with subfolder name.
      *
      * @param plugin        The plugin instance.
      * @param subFolderName The name of the subfolder where the configuration file will be stored.
      * @param fileName      The name of the configuration file.
      */
     protected Configurable(@NotNull Plugin plugin, String subFolderName, String fileName) {
+        this(plugin, new File(subFolderName), fileName);
+    }
+
+    /**
+     * Constructs a new Configurable object with subfolder.
+     *
+     * @param plugin        The plugin instance.
+     * @param subFolder     The subFolder where the configuration file will be stored.
+     * @param fileName      The name of the configuration file.
+     */
+    protected Configurable(@NotNull Plugin plugin, File subFolder, String fileName) {
         this.plugin = plugin;
-        File dataFolder = plugin.getDataFolder();
-        this.subFolder = new File(dataFolder, subFolderName);
+        this.parentFolder = new File(plugin.getDataFolder(), subFolder.getPath());
 
-        if (!subFolder.exists()) {
-            subFolder.mkdirs();
-        }
+        saveResource(subFolder, fileName);
 
-        this.configFile = new File(subFolder, fileName + ".yml");
-
-        saveResource();
         this.config = getConfig();
         saveConfig();
     }
@@ -102,12 +116,23 @@ public abstract class Configurable implements Config {
         }
     }
 
-    private void saveResource() {
-        String filePath = configFile.getPath();
+    private void saveResource(File subFolder, String fileName) {
+        subFolder.mkdirs();
 
-        InputStream inputStream = plugin.getResource(filePath);
+        String filePath = fileName + ".yml";
+        this.configFile = new File(parentFolder, filePath);
 
-        if (inputStream == null) {
+        File fileFrom = new File(subFolder, filePath);
+        String pathFileFrom = fileFrom.getPath();
+
+        if (pathFileFrom.startsWith("\\"))
+            pathFileFrom = pathFileFrom.replaceFirst("\\\\", "");
+
+        saveResource(pathFileFrom);
+    }
+
+    private void saveResource(String fileFromPath) {
+        if (plugin.getResource(fileFromPath) == null) {
             configFile.getParentFile().mkdirs();
 
             try {
@@ -117,7 +142,12 @@ public abstract class Configurable implements Config {
             }
         }
 
-        plugin.saveResource(filePath, false);
+        try {
+            plugin.saveResource(fileFromPath, true);
+        } catch (IllegalArgumentException e) {
+            plugin.getLogger().warning("Failed to find resource: " + fileFromPath);
+        }
+
         plugin.saveConfig();
     }
 

@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BoilConfig extends Configurable {
     protected BoilConfig(@NotNull Plugin plugin, String fileName) {
-        super(plugin, ".", fileName);
+        super(plugin, fileName);
     }
 
     public void test() {

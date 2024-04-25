@@ -5,6 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class MenuConfig extends Configurable {
     protected MenuConfig(@NotNull Plugin plugin, String fileName) {
-        super(plugin, ".", fileName);
+        super(plugin, fileName);
     }
 }

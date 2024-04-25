@@ -1,10 +1,9 @@
 package com.megadev.scoca;
 
-import com.megadev.scoca.config.BoilConfig;
-import com.megadev.scoca.config.Config;
 import com.megadev.scoca.config.ConfigManager;
-import com.megadev.scoca.config.Configurable;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.regex.Pattern;
 
 public final class SCoca extends JavaPlugin {
     @Override
@@ -16,7 +15,9 @@ public final class SCoca extends JavaPlugin {
     private void setupManagers() {
         ConfigManager.init(this);
 
-        BoilConfig config = ConfigManager.getInstance().getConfig(BoilConfig.class);
+
+
+//        BoilConfig config = ConfigManager.getInstance().getConfig(BoilConfig.class);
     }
 
     private void registerListeners() {

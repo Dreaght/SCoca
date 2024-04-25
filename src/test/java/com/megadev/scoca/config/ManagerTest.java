@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -21,7 +23,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class ManagerTest {
-    private static final File testDataFolder = new File("testDataFolder");
+    private static final File testDataFolder = new File("src/test/resources/testDataFolder");
 
     @BeforeAll
     static void makeTestDataFolder() {
@@ -40,22 +42,6 @@ class ManagerTest {
 
         when(plugin.getConfig()).thenReturn(fileConfiguration);
 
-        when(plugin.getResource(anyString())).thenAnswer(invocation -> {
-            String resourceName = invocation.getArgument(0);
-            resourceName = resourceName.replace("testDataFolder", "src\\test\\resources");
-
-            URL resourceUrl = getClass().getResource("/" + resourceName);
-            if (resourceUrl != null) {
-                try {
-                    return resourceUrl.openStream();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            } else {
-                return null;
-            }
-        });
         ConfigManager.init(plugin);
     }
 

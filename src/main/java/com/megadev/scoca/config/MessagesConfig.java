@@ -5,6 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class MessagesConfig extends Configurable {
     protected MessagesConfig(@NotNull Plugin plugin, String fileName) {
-        super(plugin, ".", fileName);
+        super(plugin, fileName);
     }
 }

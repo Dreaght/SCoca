@@ -51,3 +51,9 @@ processResources {
         expand props
     }
 }
+
+tasks.jar {
+    enabled = true
+    destinationDirectory.set(new File("C:\\Users\\nikit\\Desktop\\MegaDevTests\\plugins"))
+    archiveFileName = "SCoca-${version}.jar"
+}

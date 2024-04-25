@@ -5,6 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class ItemsConfig extends Configurable {
     protected ItemsConfig(@NotNull Plugin plugin, String fileName) {
-        super(plugin, ".", fileName);
+        super(plugin, fileName);
     }
 }
