@@ -9,6 +9,9 @@ public enum Permission {
     BOILER_USE("boiler-use"),
     BOILER_GIVE("boiler-give");
 
+    private final String configPath;
+
     Permission(String configPath) {
+        this.configPath = configPath;
     }
 }
