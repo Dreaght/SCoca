@@ -1,6 +1,6 @@
 package com.megadev.scoca.config;
 
-import com.megadev.scoca.config.menu.MenuManager;
+import com.megadev.scoca.config.animation.AnimationManager;
 import org.bukkit.plugin.Plugin;
 
 public class ConfigManager extends Manager {
@@ -8,7 +8,9 @@ public class ConfigManager extends Manager {
 
     private ConfigManager(Plugin plugin) {
         super(plugin, ".");
-        addConfigSafely(MenuManager.class, new MenuManager(plugin, "menu"));
+
+        addConfigSafely(AnimationManager.class, new AnimationManager(plugin, "animation"));
+
         addConfigSafely(SettingsConfig.class, new SettingsConfig(plugin, "config"));
         addConfigSafely(MenuConfig.class, new MenuConfig(plugin, "menu"));
         addConfigSafely(BoilConfig.class, new BoilConfig(plugin, "boil"));

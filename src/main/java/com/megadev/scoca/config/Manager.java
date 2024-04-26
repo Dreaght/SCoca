@@ -6,17 +6,20 @@ import org.bukkit.plugin.Plugin;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manager object to handle Config objects
+ */
 public abstract class Manager implements Config {
     @Getter private final Plugin plugin;
     @Getter private final String dataFolder;
     private final Map<Class<? extends Config>, Config> configMap = new HashMap<>();
 
-    protected Manager(Plugin plugin, String dataFolder) {
+    public Manager(Plugin plugin, String dataFolder) {
         this.plugin = plugin;
         this.dataFolder = dataFolder;
     }
 
-    protected void addConfig(Class<? extends Config> configClass, Config config) {
+    public void addConfig(Class<? extends Config> configClass, Config config) {
         configMap.put(configClass, config);
     }
 

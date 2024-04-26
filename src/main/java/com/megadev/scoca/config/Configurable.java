@@ -19,31 +19,64 @@ public abstract class Configurable implements Config {
     protected File configFile;
     protected File parentFolder;
 
+    /**
+     * Constructs a Configurable object.
+     *
+     * @param plugin The plugin instance.
+     * @param path   The path to the configuration file.
+     */
     protected Configurable(@NotNull Plugin plugin, String... path) {
         this.plugin = plugin;
-        this.parentFolder = new File(plugin.getDataFolder(), String.join(File.separator, path));
+        this.parentFolder = new File(plugin.getDataFolder(), String.join("/", path));
         saveResource(path);
         this.config = getConfig();
         saveConfig();
     }
 
+    /**
+     * Retrieves a String value from the configuration.
+     *
+     * @param path The path to the value.
+     * @return The String value.
+     */
     public String getString(String path) {
         return getConfig().getString(path);
     }
 
+    /**
+     * Retrieves an Object value from the configuration.
+     *
+     * @param path The path to the value.
+     * @return The Object value.
+     */
     public Object getValue(String path) {
         return getConfig().get(path);
     }
 
+    /**
+     * Returns a list of Strings from the configuration.
+     *
+     * @param path The path to the list.
+     * @return The list of Strings.
+     */
     public List<String> getStringList(String path) {
         return getConfig().getStringList(path);
     }
 
-    public void setValue(String key, String value) {
-        getConfig().set(key, value);
+    /**
+     * Sets a value in the configuration.
+     *
+     * @param path  The path to the value.
+     * @param value The value to set.
+     */
+    public void setValue(String path, String value) {
+        getConfig().set(path, value);
         saveConfig();
     }
 
+    /**
+     * Deletes the configuration file.
+     */
     public void deleteConfig() {
         if (configFile.exists()) {
             configFile.delete();

@@ -1,4 +1,0 @@
-steps:
-  - BLOCK_GRAVEL_STEP: [ 0, 0, 0 ]
-  - BLOCK_GRAVEL_STEP: [ 0, -1, 0 ]
-  - BLOCK_GRAVEL_STEP: [ 1, 0, 1 ]

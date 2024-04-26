@@ -1,2 +1,2 @@
 steps:
-  menu: menu/boiler/default.yml
+  MENU: animation/menu/boiler/default.yml

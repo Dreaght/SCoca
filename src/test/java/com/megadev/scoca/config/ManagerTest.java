@@ -1,7 +1,7 @@
 package com.megadev.scoca.config;
 
-import com.megadev.scoca.config.menu.MenuManager;
-import com.megadev.scoca.config.menu.boiler.DefaultConfig;
+import com.megadev.scoca.config.animation.menu.MenuManager;
+import com.megadev.scoca.config.animation.menu.boiler.DefaultConfig;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.plugin.Plugin;
@@ -11,14 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

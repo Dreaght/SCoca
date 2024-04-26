@@ -1,2 +1,2 @@
 steps:
-  menu: menu/furnace/default.yml
+  MENU: animation/menu/furnace/default.yml

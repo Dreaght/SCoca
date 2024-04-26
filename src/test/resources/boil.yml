@@ -1,9 +1,0 @@
-stages:
-  fuel:
-    animation-path: ""
-  sulfur-to-salt:
-    animation-path: ""
-  salt-to-herb:
-    animation-path: ""
-  herb-to-meph:
-    animation-path: ""
