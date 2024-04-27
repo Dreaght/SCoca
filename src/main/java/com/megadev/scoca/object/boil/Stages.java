@@ -4,8 +4,15 @@ import lombok.Getter;
 
 @Getter
 public enum Stages {
-    FUEL,
-    SULFUR_TO_SALT,
-    SALT_TO_HERB,
-    HERB_TO_MEPH,
+    FUEL("fuel"),
+    SULFUR_TO_SALT("sulfur-to-salt"),
+    SALT_TO_HERB("salt-to-herb"),
+    HERB_TO_MEPH("herb-to-meph"),
+    ;
+
+    private final String configPath;
+
+    Stages(String configPath) {
+        this.configPath = configPath;
+    }
 }

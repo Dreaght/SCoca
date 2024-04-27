@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Manager object to handle Config objects
+ * Represents a Manager to contain Config objects
  */
 public abstract class Manager implements Config {
     @Getter private final Plugin plugin;
@@ -19,10 +19,20 @@ public abstract class Manager implements Config {
         this.dataFolder = dataFolder;
     }
 
+    /**
+     * Adds a Config object to map.
+     * @param configClass Class to add.
+     * @param config Config object to add.
+     */
     public void addConfig(Class<? extends Config> configClass, Config config) {
         configMap.put(configClass, config);
     }
 
+    /**
+     * Gets a Config object by Class.
+     * @param configClass Class of Config object.
+     * @return The Config object if found, otherwise throws an exception.
+     */
     public <T extends Config> T getConfig(Class<T> configClass) {
         T config = getConfigFromMap(configClass);
         if (config != null) return config;

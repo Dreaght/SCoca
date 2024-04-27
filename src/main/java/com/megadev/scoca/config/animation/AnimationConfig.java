@@ -4,6 +4,9 @@ import com.megadev.scoca.config.Configurable;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents an animation config file access.
+ */
 public class AnimationConfig extends Configurable {
     /**
      * Constructs a Configurable object.

@@ -4,6 +4,9 @@ import com.megadev.scoca.config.Configurable;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents particle config file access.
+ */
 public class ParticleConfig extends Configurable {
     /**
      * Constructs a Configurable object.

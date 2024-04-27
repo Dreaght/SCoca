@@ -1,5 +1,5 @@
 package com.megadev.scoca.object.animation;
 
-public class Animation {
+import java.util.List;
 
-}
+public record Animation(List<Step> steps) {}

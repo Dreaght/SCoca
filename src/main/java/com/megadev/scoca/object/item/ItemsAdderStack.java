@@ -2,6 +2,7 @@ package com.megadev.scoca.object.item;
 
 import dev.lone.itemsadder.api.CustomStack;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
 
@@ -25,6 +26,11 @@ public class ItemsAdderStack implements PluginStack {
     @Override
     public String getTitle() {
         return itemStack.getDisplayName();
+    }
+
+    @Override
+    public void setItemMeta(ItemMeta itemMeta) {
+        getItemStack().setItemMeta(itemMeta);
     }
 
     @Override

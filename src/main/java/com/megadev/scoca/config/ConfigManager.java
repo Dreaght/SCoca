@@ -3,6 +3,9 @@ package com.megadev.scoca.config;
 import com.megadev.scoca.config.animation.AnimationManager;
 import org.bukkit.plugin.Plugin;
 
+/**
+ * Represents the general config manager.
+ */
 public class ConfigManager extends Manager {
     private static volatile ConfigManager instance;
 
@@ -18,6 +21,10 @@ public class ConfigManager extends Manager {
         addConfigSafely(MessagesConfig.class, new MessagesConfig(plugin, "messages"));
     }
 
+    /**
+     * Gets ConfigManager instance.
+     * @return ConfigManager instance.
+     */
     public static synchronized ConfigManager getInstance() {
         if (instance == null) {
             throw new IllegalStateException("ConfigManager has not been initialized. Call init() first.");
@@ -25,6 +32,10 @@ public class ConfigManager extends Manager {
         return instance;
     }
 
+    /**
+     * Initializes the ConfigManager instance.
+     * @param plugin This plugin.
+     */
     public static void init(Plugin plugin) {
         if (instance == null) {
             synchronized (ConfigManager.class) {
@@ -35,6 +46,11 @@ public class ConfigManager extends Manager {
         }
     }
 
+    /**
+     * Adds the Config object with asynchronous safely access.
+     * @param configClass Class of the Config
+     * @param config Config object
+     */
     public synchronized <T extends Config> void addConfigSafely(Class<T> configClass, T config) {
         addConfig(configClass, config);
     }

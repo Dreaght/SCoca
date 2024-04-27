@@ -30,7 +30,6 @@ public abstract class Configurable implements Config {
         this.parentFolder = new File(plugin.getDataFolder(), String.join("/", path));
         saveResource(path);
         this.config = getConfig();
-        saveConfig();
     }
 
     /**

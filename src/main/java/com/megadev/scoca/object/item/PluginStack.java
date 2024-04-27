@@ -34,4 +34,6 @@ public interface PluginStack {
     default ItemMeta getItemMeta() {
         return getItemStack().getItemMeta();
     }
+
+    void setItemMeta(ItemMeta itemMeta);
 }

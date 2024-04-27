@@ -1,6 +1,7 @@
 package com.megadev.scoca.object.item;
 
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
 
@@ -24,6 +25,11 @@ public class BukkitItemStack implements PluginStack {
     @Override
     public String getTitle() {
         return Objects.requireNonNull(itemStack.getItemMeta()).getDisplayName();
+    }
+
+    @Override
+    public void setItemMeta(ItemMeta itemMeta) {
+        itemStack.setItemMeta(itemMeta);
     }
 
     @Override
