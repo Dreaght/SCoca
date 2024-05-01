@@ -1,7 +1,7 @@
 package com.megadev.scoca.config;
 
-import com.megadev.scoca.object.content.Item;
 import com.megadev.scoca.object.item.PluginStack;
+import com.megadev.scoca.object.menu.MenuState;
 import com.megadev.scoca.util.PluginStackFactory;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,8 +19,8 @@ public class ItemFactory {
      * @param sectionName Configuration section name.
      * @return List of Item objects.
      */
-    public static List<Item> getItems(Configuration config, String sectionName) {
-        List<Item> items = new ArrayList<>();
+    public static List<MenuState.Item> getItems(Configuration config, String sectionName) {
+        List<MenuState.Item> items = new ArrayList<>();
 
         ConfigurationSection section = config.getConfigurationSection(sectionName);
         for (String key : section.getKeys(false)) {
@@ -30,12 +30,12 @@ public class ItemFactory {
         return items;
     }
 
-    private static void handleNestedSection(ConfigurationSection patternBlock, List<Item> items) {
+    private static void handleNestedSection(ConfigurationSection patternBlock, List<MenuState.Item> items) {
         String item = patternBlock.getString("item");
         String name = patternBlock.getString("name");
         List<String> lore = patternBlock.getStringList("lore");
         PluginStack pluginStack = PluginStackFactory.getPluginStack(item, name, lore);
 
-        items.add(new Item(patternBlock.getName(), pluginStack));
+        items.add(new MenuState.Item(patternBlock.getName(), pluginStack));
     }
 }

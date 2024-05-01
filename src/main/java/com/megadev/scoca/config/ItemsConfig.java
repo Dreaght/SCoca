@@ -1,6 +1,6 @@
 package com.megadev.scoca.config;
 
-import com.megadev.scoca.object.content.Item;
+import com.megadev.scoca.object.menu.MenuState;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,8 +25,8 @@ public class ItemsConfig extends Configurable {
      * Gets and concatenates lists of items and blocks.
      * @return List of Item objects.
      */
-    public List<Item> getAll() {
-        List<Item> allItems = new ArrayList<>();
+    public List<MenuState.Item> getAll() {
+        List<MenuState.Item> allItems = new ArrayList<>();
         allItems.addAll(getItems());
         allItems.addAll(getBlocks());
         return allItems;
@@ -36,7 +36,7 @@ public class ItemsConfig extends Configurable {
      * Gets items from its configuration section.
      * @return List of Item objects.
      */
-    public List<Item> getItems() {
+    public List<MenuState.Item> getItems() {
         return ItemFactory.getItems(config, "item-stack");
     }
 
@@ -44,7 +44,7 @@ public class ItemsConfig extends Configurable {
      * Gets blocks from its configuration section.
      * @return List of Item objects.
      */
-    public List<Item> getBlocks() {
+    public List<MenuState.Item> getBlocks() {
         return ItemFactory.getItems(config, "blocks");
     }
 }

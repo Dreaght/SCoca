@@ -15,4 +15,6 @@ public enum Stages {
     Stages(String configPath) {
         this.configPath = configPath;
     }
+
+    public record Stage(String title, String animationPath) {}
 }

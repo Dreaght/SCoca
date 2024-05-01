@@ -1,7 +1,7 @@
 package com.megadev.scoca.config;
 
-import com.megadev.scoca.object.content.Item;
 import com.megadev.scoca.object.menu.DefaultAnimationPath;
+import com.megadev.scoca.object.menu.MenuState;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +34,7 @@ public class MenuConfig extends Configurable {
      * Gets slot patterns from configuration.
      * @return List of Item objects.
      */
-    public List<Item> getSlotPatterns() {
+    public List<MenuState.Item> getSlotPatterns() {
         return ItemFactory.getItems(config, "slot-patterns");
     }
 }
