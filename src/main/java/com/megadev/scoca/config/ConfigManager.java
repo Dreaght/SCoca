@@ -1,6 +1,8 @@
 package com.megadev.scoca.config;
 
 import com.megadev.scoca.config.animation.AnimationManager;
+import dev.mega.megacore.config.Config;
+import dev.mega.megacore.config.Manager;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -51,7 +53,7 @@ public class ConfigManager extends Manager {
      * @param configClass Class of the Config
      * @param config Config object
      */
-    public synchronized <T extends Config> void addConfigSafely(Class<T> configClass, T config) {
+    public synchronized <T> void addConfigSafely(Class<? extends Config> configClass, Config config) {
         addConfig(configClass, config);
     }
 }

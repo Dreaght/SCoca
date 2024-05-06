@@ -1,6 +1,7 @@
 package com.megadev.scoca.config;
 
 import com.megadev.scoca.object.message.Message;
+import dev.mega.megacore.config.Configurable;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 

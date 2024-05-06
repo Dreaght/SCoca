@@ -1,6 +1,6 @@
 package com.megadev.scoca.config.animation.particle;
 
-import com.megadev.scoca.config.Configurable;
+import dev.mega.megacore.config.Configurable;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 

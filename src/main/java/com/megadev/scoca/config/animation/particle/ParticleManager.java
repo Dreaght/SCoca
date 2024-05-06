@@ -1,6 +1,6 @@
 package com.megadev.scoca.config.animation.particle;
 
-import com.megadev.scoca.config.Manager;
+import dev.mega.megacore.config.Manager;
 import org.bukkit.plugin.Plugin;
 
 /**

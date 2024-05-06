@@ -1,9 +1,10 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'com.megadev'
-version = '1.0-SNAPSHOT'
+version = '1.0-beta'
 
 repositories {
     mavenCentral()
@@ -23,6 +24,8 @@ dependencies {
     testCompileOnly "org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testImplementation 'org.mockito:mockito-core:5.8.0'
+
+    implementation files('libs/megacore-1.0-beta.jar')
 }
 
 def targetJavaVersion = 16
@@ -52,8 +55,7 @@ processResources {
     }
 }
 
-tasks.jar {
-    enabled = true
-    destinationDirectory.set(new File("C:\\Users\\nikit\\Desktop\\MegaDevTests\\plugins"))
+shadowJar {
+    destinationDirectory.set(new File("/home/dreaght/Desktop/MegaServer/plugins"))
     archiveFileName = "SCoca-${version}.jar"
 }

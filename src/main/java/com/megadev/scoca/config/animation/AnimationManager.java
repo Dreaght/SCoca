@@ -1,9 +1,9 @@
 package com.megadev.scoca.config.animation;
 
-import com.megadev.scoca.config.Manager;
 import com.megadev.scoca.config.animation.particle.ParticleManager;
 import com.megadev.scoca.config.animation.sound.SoundManager;
 import com.megadev.scoca.config.animation.menu.MenuManager;
+import dev.mega.megacore.config.Manager;
 import org.bukkit.plugin.Plugin;
 
 /**

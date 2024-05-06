@@ -1,6 +1,6 @@
 package com.megadev.scoca.config.animation.menu.boiler;
 
-import com.megadev.scoca.config.Manager;
+import dev.mega.megacore.config.Manager;
 import org.bukkit.plugin.Plugin;
 
 public class BoilerManager extends Manager {

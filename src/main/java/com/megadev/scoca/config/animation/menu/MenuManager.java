@@ -1,8 +1,8 @@
 package com.megadev.scoca.config.animation.menu;
 
-import com.megadev.scoca.config.Manager;
 import com.megadev.scoca.config.animation.menu.boiler.BoilerManager;
 import com.megadev.scoca.config.animation.menu.furnace.FurnaceManager;
+import dev.mega.megacore.config.Manager;
 import org.bukkit.plugin.Plugin;
 
 public class MenuManager extends Manager {
