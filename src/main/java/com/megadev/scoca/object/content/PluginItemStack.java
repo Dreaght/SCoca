@@ -3,7 +3,7 @@ package com.megadev.scoca.object.content;
 import lombok.Getter;
 
 @Getter
-public enum PluginItemStacks {
+public enum PluginItemStack {
     FUEL("fuel"),
     SULFUR("sulfur"),
     SALT("salt"),
@@ -11,6 +11,9 @@ public enum PluginItemStacks {
     MEPH("meph"),
     ;
 
-    PluginItemStacks(String title) {
+    private final String title;
+
+    PluginItemStack(String title) {
+        this.title = title;
     }
 }

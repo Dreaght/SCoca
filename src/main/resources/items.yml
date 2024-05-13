@@ -3,27 +3,27 @@
 # ---------------------------
 item-stack:
   fuel:
-    item: ""
+    item: "STONE"
     name: "&0&lFuel"
     lore:
       - "&8Use it as fuel for your furnace"
   sulfur:
-    item: ""
+    item: "STONE"
     name: "&e&lSulfur"
     lore:
       - "&8Furnace ingredient"
   salt:
-    item: ""
+    item: "STONE"
     name: "&7&lSalt"
     lore:
       - "&8Furnace ingredient"
   herb:
-    item: ""
+    item: "STONE"
     name: "&2&lHerb"
     lore:
       - "&8Furnace ingredient"
   meph:
-    item: ""
+    item: "STONE"
     name: "&f&lMeph"
     lore:
       - "&8Eat it to slowly rot and die"
@@ -33,12 +33,12 @@ item-stack:
 # ---------------------------
 blocks:
   furnace:
-    block: ""
+    item: "STONE"
     name: "&6Furnace"
     lore:
       - "&7Place it and open"
   boiler:
-    block: ""
-    name: "&6Furnace"
+    item: "STONE"
+    name: "&7Boiler"
     lore:
       - "&7Place it and open"

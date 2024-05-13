@@ -6,14 +6,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class GiveArg extends Argument {
-    public GiveArg(ArgumentMatcher matcher) {
+public class TestArg extends Argument {
+    public TestArg(ArgumentMatcher matcher) {
         super(matcher);
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        System.out.println("smthing");
-        return true;
+        System.out.println("TEST ARG");
+        return false;
     }
 }
