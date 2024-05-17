@@ -37,6 +37,6 @@ public class BukkitItemStack implements PluginStack {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BukkitItemStack that = (BukkitItemStack) o;
-        return Objects.equals(getName(), that.getName());
+        return Objects.equals(getItemStack(), that.getItemStack());
     }
 }

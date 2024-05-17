@@ -39,6 +39,6 @@ public class ItemsAdderStack implements PluginStack {
         if (o == null || getClass() != o.getClass()) return false;
         ItemsAdderStack that = (ItemsAdderStack) o;
 
-        return Objects.equals(getName(), that.getName());
+        return Objects.equals(getItemStack(), that.getItemStack());
     }
 }

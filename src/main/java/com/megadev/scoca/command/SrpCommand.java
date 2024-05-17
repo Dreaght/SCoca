@@ -2,6 +2,9 @@ package com.megadev.scoca.command;
 
 import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.config.ItemsConfig;
+import com.megadev.scoca.manager.ItemManager;
+import com.megadev.scoca.object.content.ContentStack;
+import com.megadev.scoca.object.content.SCocaItem;
 import com.megadev.scoca.object.menu.MenuState;
 import dev.mega.megacore.command.CommandHandler;
 import org.bukkit.Bukkit;
@@ -39,8 +42,13 @@ public class SrpCommand {
         for (MenuState.Item item : items) {
             if (itemName.equals(item.title())) {
                 player.getInventory().addItem(item.pluginStack().getItemStack());
+
+                SCocaItem sCocaItem = new SCocaItem(player.getUniqueId(), item.pluginStack(), ContentStack.valueOf(item.title()));
+                ItemManager.getInstance().addItem(sCocaItem);
                 return;
             }
         }
+
+        sender.sendMessage("matched block not found");
     }
 }
