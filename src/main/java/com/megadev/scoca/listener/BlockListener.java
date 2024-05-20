@@ -3,7 +3,12 @@ package com.megadev.scoca.listener;
 import com.megadev.scoca.manager.BlockManager;
 import com.megadev.scoca.manager.ItemManager;
 import com.megadev.scoca.object.block.PluginBlock;
-import org.bukkit.block.Block;
+import com.megadev.scoca.object.content.SCocaBlock;
+import com.megadev.scoca.object.content.SCocaItem;
+import com.megadev.scoca.object.item.PluginStack;
+import com.megadev.scoca.util.MetaUtil;
+import com.megadev.scoca.util.PluginStackFactory;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -15,19 +20,34 @@ import java.util.UUID;
 public class BlockListener implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        Location location = event.getBlock().getLocation();
+
+        ItemManager itemManager = ItemManager.getInstance();
+
+        UUID uuid = event.getPlayer().getUniqueId();
         ItemStack itemStack = event.getItemInHand();
-//
-//        if (ItemManager.getInstance())
-//
-////        UUID uuid = event.getPlayer().getUniqueId();
-//
-//
-//
-//        BlockManager.getInstance().addBlock();
+
+        PluginStack pluginStack = PluginStackFactory.getPluginStack(itemStack);
+
+        SCocaItem sCocaItem = itemManager.getPluginBlock(new SCocaItem(uuid, pluginStack));
+
+        if (sCocaItem != null) {
+            String content = MetaUtil.getItemMeta(itemStack, "content");
+            if (content != null) {
+                PluginBlock pluginBlock = new PluginBlock(pluginStack, location);
+
+                BlockManager.getInstance().addBlock(uuid, new SCocaBlock(uuid, pluginBlock));
+            }
+        }
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        Location location = event.getBlock().getLocation();
+        UUID uuid = event.getPlayer().getUniqueId();
 
+        PluginBlock pluginBlock = new PluginBlock(null, location);
+
+        BlockManager.getInstance().removeBlock(uuid, new SCocaBlock(uuid, pluginBlock));
     }
 }

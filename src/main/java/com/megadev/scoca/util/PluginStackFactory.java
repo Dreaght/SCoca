@@ -3,7 +3,6 @@ package com.megadev.scoca.util;
 import com.megadev.scoca.object.item.BukkitItemStack;
 import com.megadev.scoca.object.item.ItemsAdderStack;
 import com.megadev.scoca.object.item.PluginStack;
-import dev.lone.itemsadder.api.CustomBlock;
 import dev.lone.itemsadder.api.CustomStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,12 +11,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class PluginStackFactory {
-    public static PluginStack getPluginStack(String item, String title, List<String> lore) {
+    public static PluginStack getPluginStack(String contentName, String item, String title, List<String> lore) {
         PluginStack pluginStack = null;
 
         if (item.startsWith("itemsadder:")) {
             item = parseItemIdentifier(item);
-            if (isCustomBlock(item)) {
+            if (isCustomItem(item)) {
                 pluginStack = createItemsAdderStack(item);
             }
         } else {
@@ -29,7 +28,20 @@ public class PluginStackFactory {
         }
 
         setItemMeta(pluginStack, title, lore);
+        MetaUtil.setItemMeta(pluginStack.getItemStack(), "content", contentName);
 
+        return pluginStack;
+    }
+
+    public static PluginStack getPluginStack(ItemStack itemStack) {
+        PluginStack pluginStack;
+        CustomStack customStack = CustomStack.byItemStack(itemStack);
+
+        if (customStack != null) {
+            pluginStack = new ItemsAdderStack(customStack);
+        } else {
+            pluginStack = new BukkitItemStack(itemStack);
+        }
         return pluginStack;
     }
 
@@ -37,8 +49,8 @@ public class PluginStackFactory {
         return item.split(":", 2)[1];
     }
 
-    private static boolean isCustomBlock(String item) {
-        return CustomBlock.isInRegistry(item);
+    public static boolean isCustomItem(String item) {
+        return CustomStack.isInRegistry(item);
     }
 
     private static PluginStack createItemsAdderStack(String item) {
@@ -55,6 +67,7 @@ public class PluginStackFactory {
         ItemMeta stackMeta = pluginStack.getItemMeta();
         stackMeta.setDisplayName(title);
         stackMeta.setLore(lore);
+
         pluginStack.setItemMeta(stackMeta);
     }
 }

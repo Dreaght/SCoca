@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum ContentBlock {
     FURNACE("furnace"),
-    BOILER("boiler");
+    BOILER("boiler"),
+    ;
 
     private final String title;
 

@@ -1,13 +1,10 @@
 package com.megadev.scoca.manager;
 
 import com.megadev.scoca.object.content.SCocaItem;
-import com.megadev.scoca.object.item.PluginStack;
 import com.megadev.scoca.storage.ItemData;
 import dev.mega.megacore.MegaCore;
 import dev.mega.megacore.manager.Manager;
 import lombok.Getter;
-
-import java.util.UUID;
 
 public class ItemManager extends Manager {
     @Getter private static ItemManager instance;
@@ -33,6 +30,17 @@ public class ItemManager extends Manager {
         itemData = null;
     }
 
+    public boolean isRegistered(SCocaItem block) {
+        if (block != null) {
+            return itemData.contains(block);
+        }
+        return false;
+    }
+
+    public SCocaItem getPluginBlock(SCocaItem sCocaItem) {
+        return itemData.getRegistered(sCocaItem.getUuid(), sCocaItem);
+    }
+
     public void addItem(SCocaItem pluginStack) {
         if (itemData != null) {
             itemData.addValueForUuid(pluginStack.getUuid(), pluginStack);
@@ -44,6 +52,4 @@ public class ItemManager extends Manager {
             itemData.removeValue(pluginStack);
         }
     }
-
-//    public  getBlockItem()
 }

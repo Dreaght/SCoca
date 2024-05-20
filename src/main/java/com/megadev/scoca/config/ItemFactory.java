@@ -34,10 +34,11 @@ public class ItemFactory {
     }
 
     private static void handleNestedSection(ConfigurationSection patternBlock, List<MenuState.Item> items) {
+        String contentName = patternBlock.getName();
         String item = patternBlock.getString("item");
         String name = Color.getTranslated(Objects.requireNonNull(patternBlock.getString("name")));
         List<String> lore = Color.getTranslated(patternBlock.getStringList("lore"));
-        PluginStack pluginStack = PluginStackFactory.getPluginStack(item, name, lore);
+        PluginStack pluginStack = PluginStackFactory.getPluginStack(contentName, item, name, lore);
 
         items.add(new MenuState.Item(patternBlock.getName(), pluginStack));
     }

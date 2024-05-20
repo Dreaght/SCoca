@@ -1,6 +1,6 @@
 package com.megadev.scoca.manager;
 
-import com.megadev.scoca.object.block.PluginBlock;
+import com.megadev.scoca.object.content.SCocaBlock;
 import com.megadev.scoca.storage.BlocksData;
 import dev.mega.megacore.MegaCore;
 import dev.mega.megacore.manager.Manager;
@@ -31,19 +31,19 @@ public class BlockManager extends Manager {
         blocksData = null;
     }
 
-    public void addBlock(UUID uuid, PluginBlock block) {
+    public void addBlock(UUID uuid, SCocaBlock block) {
         if (blocksData != null) {
             blocksData.addValueForUuid(uuid, block);
         }
     }
 
-    public void removeBlock(PluginBlock block) {
+    public void removeBlock(SCocaBlock block) {
         if (blocksData != null) {
             blocksData.removeValue(block);
         }
     }
 
-    public void removeBlock(UUID uuid, PluginBlock block) {
+    public void removeBlock(UUID uuid, SCocaBlock block) {
         if (blocksData != null) {
             blocksData.removeValueForUuid(uuid, block);
         }

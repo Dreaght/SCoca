@@ -4,6 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum ContentStack {
+    FURNACE("furnace"),
+    BOILER("boiler"),
     FUEL("fuel"),
     SULFUR("sulfur"),
     SALT("salt"),

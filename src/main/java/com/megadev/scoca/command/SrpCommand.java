@@ -43,7 +43,7 @@ public class SrpCommand {
             if (itemName.equals(item.title())) {
                 player.getInventory().addItem(item.pluginStack().getItemStack());
 
-                SCocaItem sCocaItem = new SCocaItem(player.getUniqueId(), item.pluginStack(), ContentStack.valueOf(item.title()));
+                SCocaItem sCocaItem = new SCocaItem(player.getUniqueId(), item.pluginStack());
                 ItemManager.getInstance().addItem(sCocaItem);
                 return;
             }
