@@ -1,13 +1,14 @@
 package com.megadev.scoca;
 
+import co.aikar.commands.PaperCommandManager;
 import com.megadev.scoca.command.SrpCommand;
 import com.megadev.scoca.config.ConfigManager;
+import com.megadev.scoca.config.ItemsConfig;
 import com.megadev.scoca.listener.BlockListener;
 import com.megadev.scoca.listener.InteractListener;
 import com.megadev.scoca.manager.BlockManager;
 import com.megadev.scoca.manager.ItemManager;
 import dev.mega.megacore.MegaCore;
-import dev.mega.megacore.command.CommandManager;
 import org.bukkit.plugin.PluginManager;
 
 public final class SCoca extends MegaCore {
@@ -26,8 +27,13 @@ public final class SCoca extends MegaCore {
     }
 
     private void setupCommands() {
-        CommandManager commandManager = new CommandManager(this);
-        commandManager.registerCommands(new SrpCommand());
+        PaperCommandManager manager = new PaperCommandManager(this);
+        manager.registerCommand(new SrpCommand());
+
+        manager.getCommandCompletions().registerAsyncCompletion("item", c ->
+                ConfigManager.getInstance().getConfig(ItemsConfig.class).getAllMenuTitles()
+        );
+
     }
 
     private void registerListeners() {

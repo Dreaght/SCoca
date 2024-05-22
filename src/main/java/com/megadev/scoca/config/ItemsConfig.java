@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents "items.yml" config file access object.
@@ -20,6 +21,16 @@ public class ItemsConfig extends Configurable {
      */
     protected ItemsConfig(@NotNull Plugin plugin, String... path) {
         super(plugin, path);
+    }
+
+    /**
+     * Gets all titles of each item.
+     * @return List of items names.
+     */
+    public List<String> getAllMenuTitles() {
+        return getAll().stream()
+                .map(MenuState.Item::title)
+                .collect(Collectors.toList());
     }
 
     /**

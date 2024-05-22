@@ -1,5 +1,7 @@
 package com.megadev.scoca.command;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.annotation.*;
 import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.config.ItemsConfig;
 import com.megadev.scoca.manager.ItemManager;
@@ -13,17 +15,16 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class SrpCommand {
-    @CommandHandler(name = "srp")
-    public void srpCommand(CommandSender sender, String[] args) {
-        switch (args.length) {
-            case 3:
-                handleGiveCommand(sender, args);
-                break;
-            default:
-                sender.sendMessage("3 args required");
-                break;
-        }
+@CommandAlias("srp")
+public class SrpCommand extends BaseCommand {
+
+    @Subcommand("give")
+    @CommandCompletion("@players @item @range:1-64")
+    public void onPlayerGive(Player player, Player target, String item, @Default("1") int amount) {
+        player.sendMessage("\nsender: " + player.getName() + "\n" +
+                " destination player: " + target.getName() + "\n" +
+                " item: " + item + "\n" +
+                " amount: " + amount);
     }
 
     private void handleGiveCommand(CommandSender sender, String[] args) {

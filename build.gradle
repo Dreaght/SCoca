@@ -8,6 +8,7 @@ version = '1.0-beta'
 
 repositories {
     mavenCentral()
+    maven { url = "https://repo.aikar.co/content/groups/aikar/" }
     maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
     maven { url = "https://oss.sonatype.org/content/groups/public/" }
     maven { url 'https://jitpack.io' }
@@ -27,6 +28,8 @@ dependencies {
     testCompileOnly(compileOnly 'org.jetbrains:annotations:24.1.0')
 
     implementation files('libs/megacore-1.0-beta.jar')
+
+    implementation "co.aikar:acf-paper:0.5.1-SNAPSHOT"
 }
 
 def targetJavaVersion = 16
@@ -57,6 +60,9 @@ processResources {
 }
 
 shadowJar {
+    relocate 'co.aikar.commands', 'com.megadev.scoca.acf'
+    relocate 'co.aikar.locales', 'com.megadev.scoca.locales'
+
     destinationDirectory.set(new File("/home/dreaght/Desktop/MegaServer/plugins"))
     archiveFileName = "SCoca-${version}.jar"
 }
