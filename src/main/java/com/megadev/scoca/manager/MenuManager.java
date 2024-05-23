@@ -4,7 +4,9 @@ import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.config.MenuConfig;
 import com.megadev.scoca.config.animation.AnimationConfig;
 import com.megadev.scoca.config.animation.AnimationManager;
+import com.megadev.scoca.manager.animation.AnimationInterpreter;
 import com.megadev.scoca.object.animation.Animation;
+import com.megadev.scoca.object.boil.BoilState;
 import com.megadev.scoca.object.content.ContentStack;
 import com.megadev.scoca.object.content.SCocaBlock;
 import com.megadev.scoca.object.menu.DefaultAnimationPath;
@@ -52,10 +54,20 @@ public class MenuManager extends Manager {
 
         if (contentStack == null) return;
 
+        ///
+
+
+
         MenuConfig menuConfig = configManager.getConfig(MenuConfig.class);
         String animationPath = menuConfig.getDefaultAnimationPath(DefaultAnimationPath.valueOf(contentStack.name()));
 
         AnimationConfig animationConfig = configManager.getManager(AnimationManager.class).getAnimationConfig(animationPath);
-        Animation animation
+        Animation animation = animationConfig.getAnimation();
+
+        AnimationInterpreter animationInterpreter = new AnimationInterpreter();
+
+        ///
+
+        BoilState boilState = new BoilState(uuid, sCocaBlock, null);
     }
 }
