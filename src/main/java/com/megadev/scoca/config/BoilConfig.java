@@ -1,6 +1,6 @@
 package com.megadev.scoca.config;
 
-import com.megadev.scoca.object.boil.Stages;
+import com.megadev.scoca.object.boil.Stage;
 import dev.mega.megacore.config.Configurable;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -26,14 +26,14 @@ public class BoilConfig extends Configurable {
      * Gets boiling stages from configuration.
      * @return List of boiling stages.
      */
-    public List<Stages.Stage> getStages() {
-        List<Stages.Stage> stages = new ArrayList<>();
+    public List<Stage.ConfigStage> getStages() {
+        List<Stage.ConfigStage> configStages = new ArrayList<>();
 
         for (String stageName : config.getKeys(false)) {
-            stages.add(getStage(stageName));
+            configStages.add(getStage(stageName));
         }
 
-        return stages;
+        return configStages;
     }
 
     /**
@@ -41,7 +41,7 @@ public class BoilConfig extends Configurable {
      * @param stage Stage to get.
      * @return The stage.
      */
-    public Stages.Stage getStage(Stages stage) {
+    public Stage.ConfigStage getStage(Stage stage) {
         return getStage(stage.getConfigPath());
     }
 
@@ -50,8 +50,8 @@ public class BoilConfig extends Configurable {
      * @param stageName Stage name.
      * @return The stage.
      */
-    private Stages.Stage getStage(String stageName) {
+    private Stage.ConfigStage getStage(String stageName) {
         String animationPath = config.getString("stages." + stageName + ".animation-path");
-        return new Stages.Stage(stageName, animationPath);
+        return new Stage.ConfigStage(stageName, animationPath);
     }
 }

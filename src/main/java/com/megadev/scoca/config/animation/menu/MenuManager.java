@@ -2,10 +2,10 @@ package com.megadev.scoca.config.animation.menu;
 
 import com.megadev.scoca.config.animation.menu.boiler.BoilerManager;
 import com.megadev.scoca.config.animation.menu.furnace.FurnaceManager;
-import dev.mega.megacore.config.Manager;
+import dev.mega.megacore.config.AbstractManager;
 import org.bukkit.plugin.Plugin;
 
-public class MenuManager extends Manager {
+public class MenuManager extends AbstractManager {
     public MenuManager(Plugin plugin, String dataFolder) {
         super(plugin, dataFolder);
 

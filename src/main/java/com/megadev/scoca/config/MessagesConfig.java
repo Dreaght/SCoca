@@ -1,11 +1,11 @@
 package com.megadev.scoca.config;
 
 import com.megadev.scoca.object.message.Message;
-import dev.mega.megacore.config.Configurable;
+import dev.mega.megacore.config.Configurator;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-public class MessagesConfig extends Configurable {
+public class MessagesConfig extends Configurator {
     /**
      * Constructs a Configurable object.
      *

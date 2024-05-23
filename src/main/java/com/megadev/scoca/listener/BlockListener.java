@@ -25,11 +25,12 @@ public class BlockListener implements Listener {
         ItemManager itemManager = ItemManager.getInstance();
 
         UUID uuid = event.getPlayer().getUniqueId();
-        ItemStack itemStack = event.getItemInHand();
+        ItemStack itemStack = event.getItemInHand().clone();
+        itemStack.setAmount(1);
 
         PluginStack pluginStack = PluginStackFactory.getPluginStack(itemStack);
 
-        SCocaItem sCocaItem = itemManager.getPluginBlock(new SCocaItem(uuid, pluginStack));
+        SCocaItem sCocaItem = itemManager.validateAndGetSCocaItem(new SCocaItem(uuid, pluginStack));
 
         if (sCocaItem != null) {
             String content = MetaUtil.getItemMeta(itemStack, "content");
@@ -37,6 +38,7 @@ public class BlockListener implements Listener {
                 PluginBlock pluginBlock = new PluginBlock(pluginStack, location);
 
                 BlockManager.getInstance().addBlock(uuid, new SCocaBlock(uuid, pluginBlock));
+                ItemManager.getInstance().removeItem(sCocaItem);
             }
         }
     }

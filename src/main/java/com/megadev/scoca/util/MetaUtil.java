@@ -12,13 +12,17 @@ public class MetaUtil {
     public static String getItemMeta(ItemStack itemStack, String key) {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
-            NamespacedKey namespacedKey = new NamespacedKey(namespace, key);
-            PersistentDataContainer container = meta.getPersistentDataContainer();
-
-            return container.get(namespacedKey, PersistentDataType.STRING);
+            return getItemMeta(meta, key);
         }
 
         return null;
+    }
+
+    public static String getItemMeta(ItemMeta itemMeta, String key) {
+        NamespacedKey namespacedKey = new NamespacedKey(namespace, key);
+        PersistentDataContainer container = itemMeta.getPersistentDataContainer();
+
+        return container.get(namespacedKey, PersistentDataType.STRING);
     }
 
     public static void setItemMeta(ItemStack itemStack, String key, String value) {

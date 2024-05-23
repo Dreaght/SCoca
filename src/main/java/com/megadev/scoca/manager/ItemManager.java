@@ -37,13 +37,14 @@ public class ItemManager extends Manager {
         return false;
     }
 
-    public SCocaItem getPluginBlock(SCocaItem sCocaItem) {
+    public SCocaItem validateAndGetSCocaItem(SCocaItem sCocaItem) {
         return itemData.getRegistered(sCocaItem.getUuid(), sCocaItem);
     }
 
     public void addItem(SCocaItem pluginStack) {
         if (itemData != null) {
             itemData.addValueForUuid(pluginStack.getUuid(), pluginStack);
+            System.out.println("items: " + itemData.getValue(pluginStack.getUuid()));
         }
     }
 

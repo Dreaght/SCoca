@@ -1,13 +1,13 @@
 package com.megadev.scoca.config.animation.particle;
 
-import dev.mega.megacore.config.Configurable;
+import dev.mega.megacore.config.Configurator;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents particle config file access.
  */
-public class ParticleConfig extends Configurable {
+public class ParticleConfig extends Configurator {
     /**
      * Constructs a Configurable object.
      *

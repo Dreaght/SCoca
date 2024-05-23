@@ -12,7 +12,6 @@ repositories {
     maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
     maven { url = "https://oss.sonatype.org/content/groups/public/" }
     maven { url 'https://jitpack.io' }
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -22,12 +21,11 @@ dependencies {
     compileOnly 'org.jetbrains:annotations:24.1.0'
     compileOnly 'com.github.LoneDev6:API-ItemsAdder:3.6.1'
 
-    testCompileOnly "org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testImplementation 'org.mockito:mockito-core:5.8.0'
     testCompileOnly(compileOnly 'org.jetbrains:annotations:24.1.0')
 
-    implementation files('libs/megacore-1.0-beta.jar')
+    implementation files('libs/megacore-1.1-beta.jar')
 
     implementation "co.aikar:acf-paper:0.5.1-SNAPSHOT"
 }
@@ -63,6 +61,6 @@ shadowJar {
     relocate 'co.aikar.commands', 'com.megadev.scoca.acf'
     relocate 'co.aikar.locales', 'com.megadev.scoca.locales'
 
-    destinationDirectory.set(new File("/home/dreaght/Desktop/MegaServer/plugins"))
+    destinationDirectory.set(new File(System.getenv("OUTPUT_DIR").toString()))
     archiveFileName = "SCoca-${version}.jar"
 }

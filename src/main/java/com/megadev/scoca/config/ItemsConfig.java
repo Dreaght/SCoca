@@ -1,7 +1,7 @@
 package com.megadev.scoca.config;
 
 import com.megadev.scoca.object.menu.MenuState;
-import dev.mega.megacore.config.Configurable;
+import dev.mega.megacore.config.Configurator;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * Represents "items.yml" config file access object.
  */
-public class ItemsConfig extends Configurable {
+public class ItemsConfig extends Configurator {
     /**
      * Constructs a Configurable object.
      *

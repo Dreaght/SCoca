@@ -9,9 +9,11 @@ import com.megadev.scoca.listener.InteractListener;
 import com.megadev.scoca.manager.BlockManager;
 import com.megadev.scoca.manager.ItemManager;
 import dev.mega.megacore.MegaCore;
+import dev.mega.megacore.inventory.MenuManager;
 import org.bukkit.plugin.PluginManager;
 
 public final class SCoca extends MegaCore {
+
     @Override
     public void enable() {
         setupManagers();
@@ -23,7 +25,12 @@ public final class SCoca extends MegaCore {
         ConfigManager.init(this);
 
         BlockManager.init(this);
+        BlockManager.getInstance().reload();
+
         ItemManager.init(this);
+        ItemManager.getInstance().reload();
+
+        MenuManager.register(this);
     }
 
     private void setupCommands() {
@@ -45,4 +52,5 @@ public final class SCoca extends MegaCore {
     @Override
     public void disable() {
     }
+
 }

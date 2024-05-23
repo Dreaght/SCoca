@@ -1,9 +1,9 @@
 package com.megadev.scoca.config.animation.menu.furnace;
 
-import dev.mega.megacore.config.Manager;
+import dev.mega.megacore.config.AbstractManager;
 import org.bukkit.plugin.Plugin;
 
-public class FurnaceManager extends Manager {
+public class FurnaceManager extends AbstractManager {
     public FurnaceManager(Plugin plugin, String dataFolder) {
         super(plugin, dataFolder);
 

@@ -1,13 +1,13 @@
 package com.megadev.scoca.config;
 
-import dev.mega.megacore.config.Configurable;
+import dev.mega.megacore.config.Configurator;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents "config.yml" config file access object.
  */
-public class SettingsConfig extends Configurable {
+public class SettingsConfig extends Configurator {
     /**
      * Constructs a Configurable object.
      *

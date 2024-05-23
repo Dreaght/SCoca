@@ -1,14 +1,14 @@
 package com.megadev.scoca.config;
 
 import com.megadev.scoca.config.animation.AnimationManager;
+import dev.mega.megacore.config.AbstractManager;
 import dev.mega.megacore.config.Config;
-import dev.mega.megacore.config.Manager;
 import org.bukkit.plugin.Plugin;
 
 /**
  * Represents the general config manager.
  */
-public class ConfigManager extends Manager {
+public class ConfigManager extends AbstractManager {
     private static volatile ConfigManager instance;
 
     private ConfigManager(Plugin plugin) {

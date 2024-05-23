@@ -2,7 +2,7 @@ package com.megadev.scoca.config;
 
 import com.megadev.scoca.object.menu.DefaultAnimationPath;
 import com.megadev.scoca.object.menu.MenuState;
-import dev.mega.megacore.config.Configurable;
+import dev.mega.megacore.config.Configurator;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Represents "menu.yml" config file access object.
  */
-public class MenuConfig extends Configurable {
+public class MenuConfig extends Configurator {
     /**
      * Constructs a Configurable object.
      *
