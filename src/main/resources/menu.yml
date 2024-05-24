@@ -1,7 +1,7 @@
 # See "animation" folder
 
-furnace-default-animation-path: "animation/boiler-default.yml"
-boiler-default-animation-path: "animation/furnace-default.yml"
+furnace-default-animation-path: "animation/furnace-default.yml"
+boiler-default-animation-path: "animation/boiler-default.yml"
 
 # Slot patterns can be used anywhere in "menu/<block>/<menu-state-name>.yml"
 

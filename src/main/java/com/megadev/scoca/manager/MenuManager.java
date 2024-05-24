@@ -49,8 +49,7 @@ public class MenuManager extends Manager {
 
         if (player == null) return;
 
-        String content = MetaUtil.getItemMeta(sCocaBlock.getPluginBlock().getPluginStack().getItemMeta(), "content");
-        ContentStack contentStack = ContentStack.getContentStack(content);
+        ContentStack contentStack = sCocaBlock.getContentStack();
 
         if (contentStack == null) return;
 

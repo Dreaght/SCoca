@@ -1,7 +1,6 @@
 package com.megadev.scoca.object.boil;
 
 import com.megadev.scoca.manager.animation.AnimationInterpreter;
-import com.megadev.scoca.object.block.PluginBlock;
 import com.megadev.scoca.object.content.SCocaBlock;
 import lombok.Getter;
 import lombok.Setter;

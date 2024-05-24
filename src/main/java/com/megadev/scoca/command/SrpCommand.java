@@ -6,7 +6,7 @@ import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.config.ItemsConfig;
 import com.megadev.scoca.manager.ItemManager;
 import com.megadev.scoca.object.content.SCocaItem;
-import com.megadev.scoca.object.menu.MenuState;
+import com.megadev.scoca.object.item.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,9 +27,9 @@ public class SrpCommand extends BaseCommand {
         }
 
         ItemsConfig itemsConfig = ConfigManager.getInstance().getConfig(ItemsConfig.class);
-        List<MenuState.Item> items = itemsConfig.getAll();
+        List<Item> items = itemsConfig.getAll();
 
-        for (MenuState.Item item : items) {
+        for (Item item : items) {
             if (itemName.equals(item.title())) {
                 for (int i = 0; i < amount; i++) {
                     player.getInventory().addItem(item.pluginStack().getItemStack());

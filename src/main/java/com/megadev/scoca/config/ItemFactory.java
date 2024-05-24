@@ -1,10 +1,9 @@
 package com.megadev.scoca.config;
 
 import com.megadev.scoca.object.item.PluginStack;
-import com.megadev.scoca.object.menu.MenuState;
+import com.megadev.scoca.object.item.Item;
 import com.megadev.scoca.util.PluginStackFactory;
 import dev.mega.megacore.util.Color;
-import dev.mega.megacore.util.StringPlaceholders;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -22,8 +21,8 @@ public class ItemFactory {
      * @param sectionName Configuration section name.
      * @return List of Item objects.
      */
-    public static List<MenuState.Item> getItems(Configuration config, String sectionName) {
-        List<MenuState.Item> items = new ArrayList<>();
+    public static List<Item> getItems(Configuration config, String sectionName) {
+        List<Item> items = new ArrayList<>();
 
         ConfigurationSection section = config.getConfigurationSection(sectionName);
         for (String key : section.getKeys(false)) {
@@ -33,13 +32,13 @@ public class ItemFactory {
         return items;
     }
 
-    private static void handleNestedSection(ConfigurationSection patternBlock, List<MenuState.Item> items) {
+    private static void handleNestedSection(ConfigurationSection patternBlock, List<Item> items) {
         String contentName = patternBlock.getName();
         String item = patternBlock.getString("item");
         String name = Color.getTranslated(Objects.requireNonNull(patternBlock.getString("name")));
         List<String> lore = Color.getTranslated(patternBlock.getStringList("lore"));
         PluginStack pluginStack = PluginStackFactory.getPluginStack(contentName, item, name, lore);
 
-        items.add(new MenuState.Item(patternBlock.getName(), pluginStack));
+        items.add(new Item(patternBlock.getName(), pluginStack));
     }
 }

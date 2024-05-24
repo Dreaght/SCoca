@@ -1,6 +1,7 @@
 package com.megadev.scoca.object.content;
 
 import com.megadev.scoca.object.block.PluginBlock;
+import com.megadev.scoca.util.MetaUtil;
 import lombok.Getter;
 
 import java.util.Objects;
@@ -23,5 +24,10 @@ public class SCocaBlock {
         SCocaBlock that = (SCocaBlock) o;
 
         return Objects.equals(pluginBlock, that.getPluginBlock());
+    }
+
+    public ContentStack getContentStack() {
+        String content = MetaUtil.getItemMeta(pluginBlock.getPluginStack().getItemMeta(), "content");
+        return ContentStack.getContentStack(content);
     }
 }
