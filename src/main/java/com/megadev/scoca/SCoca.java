@@ -7,7 +7,9 @@ import com.megadev.scoca.config.ItemsConfig;
 import com.megadev.scoca.listener.BlockListener;
 import com.megadev.scoca.listener.InteractListener;
 import com.megadev.scoca.manager.BlockManager;
+import com.megadev.scoca.manager.BoilManager;
 import com.megadev.scoca.manager.ItemManager;
+import com.megadev.scoca.manager.BoilMenuManager;
 import dev.mega.megacore.MegaCore;
 import dev.mega.megacore.inventory.MenuManager;
 import org.bukkit.plugin.PluginManager;
@@ -31,6 +33,10 @@ public final class SCoca extends MegaCore {
         ItemManager.getInstance().reload();
 
         MenuManager.register(this);
+        BoilMenuManager.init(this);
+
+        BoilManager.init(this);
+        BoilManager.getInstance().reload();
     }
 
     private void setupCommands() {
@@ -45,6 +51,7 @@ public final class SCoca extends MegaCore {
 
     private void registerListeners() {
         PluginManager pluginManager = getServer().getPluginManager();
+
         pluginManager.registerEvents(new BlockListener(), this);
         pluginManager.registerEvents(new InteractListener(), this);
     }

@@ -1,7 +1,7 @@
 package com.megadev.scoca.config;
 
 import com.megadev.scoca.object.boil.Stage;
-import dev.mega.megacore.config.Configurable;
+import dev.mega.megacore.config.Configurator;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Represents "boil.yml" config file access object.
  */
-public class BoilConfig extends Configurable {
+public class BoilConfig extends Configurator {
     /**
      * Constructs a Configurable object.
      *

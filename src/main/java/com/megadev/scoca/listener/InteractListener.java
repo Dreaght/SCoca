@@ -2,7 +2,7 @@ package com.megadev.scoca.listener;
 
 import com.megadev.scoca.manager.BlockManager;
 import com.megadev.scoca.manager.ItemManager;
-import com.megadev.scoca.manager.MenuManager;
+import com.megadev.scoca.manager.BoilMenuManager;
 import com.megadev.scoca.object.block.PluginBlock;
 import com.megadev.scoca.object.content.SCocaBlock;
 import com.megadev.scoca.object.content.SCocaItem;
@@ -11,6 +11,7 @@ import com.megadev.scoca.util.PluginStackFactory;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -23,6 +24,8 @@ public class InteractListener implements Listener {
 
     @EventHandler
     public void onBlockClick(PlayerInteractEvent event) {
+        if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
+
         UUID uuid = event.getPlayer().getUniqueId();
         Block block = event.getClickedBlock();
 
@@ -30,7 +33,7 @@ public class InteractListener implements Listener {
             PluginBlock pluginBlock = new PluginBlock(null, block.getLocation());
             SCocaBlock sCocaBlock = blockManager.validateAndGetSCocaBlock(new SCocaBlock(uuid, pluginBlock));
 
-            MenuManager.getInstance().openMenu(uuid, sCocaBlock);
+            BoilMenuManager.getInstance().openMenu(uuid, sCocaBlock);
         }
 
 

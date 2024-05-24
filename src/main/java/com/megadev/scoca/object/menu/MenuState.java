@@ -5,8 +5,5 @@ import com.megadev.scoca.object.item.Item;
 import java.util.List;
 
 public record MenuState(String title, List<Slot> slots) {
-
-    public record SlotPattern()
-
     public record Slot(int index, Item slotPattern) {}
 }

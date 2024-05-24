@@ -1,6 +1,6 @@
 package com.megadev.scoca.manager.animation;
 
-import com.megadev.scoca.object.content.menu.BoilMenu;
+import com.megadev.scoca.object.content.BoilMenu;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;

@@ -1,24 +1,21 @@
 package com.megadev.scoca.object.boil;
 
-import com.megadev.scoca.manager.animation.AnimationInterpreter;
+import com.megadev.scoca.object.content.BoilMenu;
 import com.megadev.scoca.object.content.SCocaBlock;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Getter
-public class BoilState {
-    private final UUID uuid;
-    private final SCocaBlock sCocaBlock;
-    @Setter private Stage currentStage;
-    private final AnimationInterpreter animationInterpreter;
+public abstract class BoilState {
+    protected final UUID uuid;
+    protected final SCocaBlock sCocaBlock;
+    protected BoilMenu boilMenu;
 
-    public BoilState(UUID uuid, SCocaBlock sCocaBlock, AnimationInterpreter animationInterpreter) {
+    public BoilState(UUID uuid, SCocaBlock sCocaBlock) {
         this.uuid = uuid;
         this.sCocaBlock = sCocaBlock;
-        this.animationInterpreter = animationInterpreter;
     }
 
     @Override
@@ -27,9 +24,5 @@ public class BoilState {
         if (o == null || getClass() != o.getClass()) return false;
         BoilState that = (BoilState) o;
         return Objects.equals(getSCocaBlock(), that.getSCocaBlock());
-    }
-
-    public void runAnimationInterpreter() {
-
     }
 }

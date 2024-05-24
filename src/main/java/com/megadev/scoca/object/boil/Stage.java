@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum Stage {
+    DEFAULT("default"),
     FUEL("fuel"),
     SULFUR_TO_SALT("sulfur-to-salt"),
     SALT_TO_HERB("salt-to-herb"),

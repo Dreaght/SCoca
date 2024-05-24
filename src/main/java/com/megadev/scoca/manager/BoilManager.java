@@ -1,22 +1,34 @@
 package com.megadev.scoca.manager;
 
 import com.megadev.scoca.manager.animation.AnimationInterpreter;
+import com.megadev.scoca.object.boil.BoilBlock;
 import com.megadev.scoca.object.boil.BoilState;
+import com.megadev.scoca.object.boil.BoilerState;
+import com.megadev.scoca.object.boil.FurnaceState;
 import com.megadev.scoca.object.content.ContentStack;
 import com.megadev.scoca.object.content.SCocaBlock;
-import com.megadev.scoca.object.content.menu.BoilMenu;
+import com.megadev.scoca.object.content.BoilMenu;
 import com.megadev.scoca.storage.BoilData;
 import dev.mega.megacore.MegaCore;
-import dev.mega.megacore.inventory.MegaInventory;
 import dev.mega.megacore.manager.Manager;
+import lombok.Getter;
+import org.bukkit.Location;
 
 import java.util.UUID;
 
 public class BoilManager extends Manager {
+    @Getter
+    private static BoilManager instance;
     private BoilData boilData;
 
-    public BoilManager(MegaCore megaCore) {
+    private BoilManager(MegaCore megaCore) {
         super(megaCore);
+    }
+
+    public static void init(MegaCore megaCore) {
+        if (instance == null) {
+            instance = new BoilManager(megaCore);
+        }
     }
 
     @Override
@@ -44,11 +56,11 @@ public class BoilManager extends Manager {
         SCocaBlock sCocaBlock = similarBoilState.getSCocaBlock();
         ContentStack contentStack = sCocaBlock.getContentStack();
 
-        switch (contentStack) {
-            case FURNACE ->
-        }
+        BoilBlock boilBlock = BoilBlock.valueOf(contentStack.name());
 
-        AnimationInterpreter animationInterpreter = new AnimationInterpreter(megaCore, null, sCocaBlock.getPluginBlock().getLocation());
-        return new BoilState(uuid, sCocaBlock, animationInterpreter);
+        return switch (boilBlock) {
+            case FURNACE -> new FurnaceState(uuid, sCocaBlock);
+            case BOILER -> new BoilerState(uuid, sCocaBlock);
+        };
     }
 }
