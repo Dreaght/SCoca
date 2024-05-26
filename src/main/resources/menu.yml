@@ -1,14 +1,14 @@
 # See "animation" folder
 
-furnace-default-animation-path: "animation/furnace-default.yml"
-boiler-default-animation-path: "animation/boiler-default.yml"
+furnace-default-animation-path: "animation/furnace-default"
+boiler-default-animation-path: "animation/boiler-default"
 
 # Slot patterns can be used anywhere in "menu/<block>/<menu-state-name>.yml"
 
 slot-patterns:
   empty:
     item: "AIR"
-    name:
+    name: "&d"
     lore:
   fuel:
     item: "PURPLE_STAINED_GLASS_PANE"

@@ -65,6 +65,11 @@ public class PluginStackFactory {
 
     private static void setItemMeta(PluginStack pluginStack, String title, List<String> lore) {
         ItemMeta stackMeta = pluginStack.getItemMeta();
+
+        if (stackMeta == null) {
+            return;
+        }
+
         stackMeta.setDisplayName(title);
         stackMeta.setLore(lore);
 

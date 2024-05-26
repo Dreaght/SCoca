@@ -34,9 +34,11 @@ public final class SCoca extends MegaCore {
 
         MenuManager.register(this);
         BoilMenuManager.init(this);
+        BoilMenuManager.getInstance().reload();
 
         BoilManager.init(this);
         BoilManager.getInstance().reload();
+
     }
 
     private void setupCommands() {

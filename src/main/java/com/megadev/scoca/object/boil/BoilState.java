@@ -19,7 +19,6 @@ public abstract class BoilState {
     protected static final ConfigManager configManager = ConfigManager.getInstance();
     protected final MegaCore megaCore;
     protected final SCocaBlock sCocaBlock;
-    protected BoilMenu boilMenu;
     @Setter protected AnimationManager animationInterpreter;
 
     public BoilState(MegaCore megaCore, SCocaBlock sCocaBlock) {
@@ -37,8 +36,8 @@ public abstract class BoilState {
 
     public void startDefaultAnimation() {
         Animation animation = getDefaultAnimation();
-        animationInterpreter = new AnimationManager(megaCore, sCocaBlock.getPluginBlock().getLocation(), boilMenu, animation);
-        animationInterpreter.startAnimation();
+        animationInterpreter = new AnimationManager(megaCore, sCocaBlock.getPluginBlock().getLocation(), null, animation);
+        animationInterpreter.reload();
     }
 
     public void stopAnimation() {

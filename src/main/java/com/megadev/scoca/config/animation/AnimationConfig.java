@@ -2,13 +2,10 @@ package com.megadev.scoca.config.animation;
 
 import com.megadev.scoca.object.animation.Animation;
 import dev.mega.megacore.config.Configurator;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Represents an animation config file access.
@@ -26,15 +23,26 @@ public class AnimationConfig extends Configurator {
 
     public Animation getAnimation() {
         if (!config.contains("steps")) {
-            return new Animation(List.of());
+            return new Animation(new ArrayList<>());
         }
 
-        ConfigurationSection stepsSection = config.getConfigurationSection("steps");
+        List<Map<?, ?>> stepsSections = config.getMapList("steps");
         List<Animation.Step> steps = new ArrayList<>();
-        Set<String> stepKeys = stepsSection.getKeys(false);
 
-        for (String stepKey : stepKeys) {
-            steps.add(new Animation.Step(Animation.Command.valueOf(stepKey), stepsSection.getString(stepKey)));
+        for (Map<?, ?> stepSection : stepsSections) {
+            for (Map.Entry<?, ?> entry : stepSection.entrySet()) {
+                String key = entry.getKey().toString().strip();
+                String value = entry.getValue().toString().strip();
+
+                Animation.Command command;
+                try {
+                    command = Animation.Command.valueOf(key);
+                } catch (IllegalArgumentException e) {
+                    throw new RuntimeException("Invalid command: " + key);
+                }
+
+                steps.add(new Animation.Step(command, value));
+            }
         }
 
         return new Animation(steps);

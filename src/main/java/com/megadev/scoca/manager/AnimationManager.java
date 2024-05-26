@@ -1,17 +1,27 @@
 package com.megadev.scoca.manager;
 
+import com.megadev.scoca.config.ConfigManager;
+import com.megadev.scoca.config.animation.AnimationConfigManager;
+import com.megadev.scoca.config.animation.menu.MenuStateConfig;
+import com.megadev.scoca.config.animation.menu.MenuStateManager;
 import com.megadev.scoca.object.animation.Animation;
 import com.megadev.scoca.object.content.BoilMenu;
 import dev.mega.megacore.MegaCore;
 import dev.mega.megacore.manager.Manager;
+import dev.mega.megacore.util.Color;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
 @Getter
 public class AnimationManager extends Manager {
+    private final static ConfigManager configManager = ConfigManager.getInstance();
+
     private final Location location;
-    private final BoilMenu boilMenu;
+    private BoilMenu boilMenu;
     private final Animation animation;
 
     private BukkitRunnable task;
@@ -25,51 +35,59 @@ public class AnimationManager extends Manager {
     }
 
     public void startAnimation() {
+        if (animation.steps().isEmpty()) {
+            return;
+        }
+
+        AtomicLong nextRunTime = new AtomicLong(0);
+        AtomicInteger currentStepIndex = new AtomicInteger(0);
+
         task = new BukkitRunnable() {
             @Override
             public void run() {
-                new AnimationStepRunner().runTask(megaCore);
+                if (System.currentTimeMillis() < nextRunTime.get()) {
+                    return;
+                }
+
+                if (currentStepIndex.getAndIncrement() < animation.steps().size()) {
+                    Animation.Step step = animation.steps().get(currentStepIndex.get() - 1);
+                    Animation.Command command = step.command();
+                    String value = step.value();
+
+                    switch (command) {
+                        case DELAY -> {
+                            long delay = Long.parseLong(value);
+                            nextRunTime.set(System.currentTimeMillis() + (delay * 50)); // ticks -> milliseconds
+                        }
+                        case MENU -> {
+                            MenuStateConfig menuStateConfig = getMenuStateConfig(value);
+
+                            if (boilMenu == null) {
+                                boilMenu = menuStateConfig.getBoilMenu(location);
+                            }
+
+                            boilMenu.getInventory().setContents(menuStateConfig.getBoilMenu(location).getInventory().getContents());
+                        }
+                        case PARTICLE -> {
+                            // Code to spawn particle
+                        }
+                        case SOUND -> {
+                            // Code to play sound
+                        }
+                    }
+
+                } else {
+                    currentStepIndex.set(0);
+                }
             }
         };
         task.runTaskTimer(megaCore, 0, 1);
     }
 
-    private class AnimationStepRunner extends BukkitRunnable {
-        private int currentStepIndex = 0;
-        private long nextRunTime = 0;
-
-        @Override
-        public void run() {
-            if (System.currentTimeMillis() < nextRunTime) {
-                return;
-            }
-
-            if (currentStepIndex < animation.steps().size()) {
-                Animation.Step step = animation.steps().get(currentStepIndex);
-                Animation.Command command = step.command();
-                String value = step.value();
-
-                switch (command) {
-                    case DELAY -> {
-                        long delay = Long.parseLong(value);
-                        nextRunTime = System.currentTimeMillis() + (delay * 50); // ticks -> milliseconds
-                    }
-                    case MENU -> {
-                        // Code to manipulate player inventory
-                        System.out.println("Menu command called: " + value);
-                    }
-                    case PARTICLE -> {
-                        // Code to spawn particle
-                    }
-                    case SOUND -> {
-                        // Code to play sound
-                    }
-                }
-                currentStepIndex++;
-            } else {
-                this.cancel();
-            }
-        }
+    private MenuStateConfig getMenuStateConfig(String path) {
+        AnimationConfigManager animationConfigManager = configManager.getManager(AnimationConfigManager.class);
+        MenuStateManager menuStateManager = animationConfigManager.getManager(MenuStateManager.class);
+        return menuStateManager.getMenuStateConfig(path);
     }
 
     @Override
@@ -80,6 +98,7 @@ public class AnimationManager extends Manager {
 
     @Override
     public void disable() {
-        task.cancel();
+        if (task != null)
+            task.cancel();
     }
 }

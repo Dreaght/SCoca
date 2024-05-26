@@ -51,6 +51,16 @@ public class BoilManager extends Manager {
         return boilState;
     }
 
+    public void removeBoilState(UUID uuid, SCocaBlock sCocaBlock) {
+        BoilState boilState = boilData.getRegistered(uuid, sCocaBlock.getPluginBlock().getLocation());
+
+        if (boilState == null) {
+            return;
+        }
+
+        boilState.stopAnimation();
+    }
+
     private BoilState getNewBoilState(SCocaBlock sCocaBlock) {
         ContentStack contentStack = sCocaBlock.getContentStack();
         BoilBlock boilBlock = BoilBlock.valueOf(contentStack.name());

@@ -1,2 +1,3 @@
 steps:
-  MENU: animation/menu/furnace/default.yml
+  - MENU: animation/menu/furnace/default
+  - DELAY: 10

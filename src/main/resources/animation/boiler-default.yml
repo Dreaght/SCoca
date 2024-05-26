@@ -1,2 +1,3 @@
 steps:
-  MENU: animation/menu/boiler/default.yml
+  - MENU: animation/menu/boiler/default
+  - DELAY: 10
