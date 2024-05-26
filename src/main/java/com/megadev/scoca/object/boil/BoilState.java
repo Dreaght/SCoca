@@ -4,7 +4,6 @@ import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.config.MenuConfig;
 import com.megadev.scoca.config.animation.AnimationConfigManager;
 import com.megadev.scoca.object.animation.Animation;
-import com.megadev.scoca.object.content.BoilMenu;
 import com.megadev.scoca.object.content.SCocaBlock;
 import com.megadev.scoca.object.menu.DefaultAnimationPath;
 import com.megadev.scoca.manager.AnimationManager;

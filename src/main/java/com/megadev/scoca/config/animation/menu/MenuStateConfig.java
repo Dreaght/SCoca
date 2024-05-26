@@ -3,6 +3,7 @@ package com.megadev.scoca.config.animation.menu;
 import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.config.MenuConfig;
 import com.megadev.scoca.object.content.BoilMenu;
+import com.megadev.scoca.object.content.Ingredient;
 import com.megadev.scoca.object.item.BukkitItemStack;
 import com.megadev.scoca.object.item.Item;
 import com.megadev.scoca.object.menu.MenuState;

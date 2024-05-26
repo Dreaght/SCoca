@@ -4,6 +4,8 @@ furnace-default-animation-path: "animation/furnace-default"
 boiler-default-animation-path: "animation/boiler-default"
 
 # Slot patterns can be used anywhere in "menu/<block>/<menu-state-name>.yml"
+# Do NOT change these slot-pattern titles:
+# [empty, fuel, sulfur, salt, herb, meph] since they used by plugin for it's correct work.
 
 slot-patterns:
   empty:
@@ -30,3 +32,4 @@ slot-patterns:
     item: "PURPLE_STAINED_GLASS_PANE"
     name: "Meph slot"
     lore:
+  # Add more...

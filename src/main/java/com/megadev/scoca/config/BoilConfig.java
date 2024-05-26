@@ -54,4 +54,8 @@ public class BoilConfig extends Configurator {
         String animationPath = config.getString("stages." + stageName + ".animation-path");
         return new Stage.ConfigStage(stageName, animationPath);
     }
+
+    public int getFuelCapacitySeconds() {
+        return config.getInt("fuel-capacity-seconds");
+    }
 }

@@ -1,3 +1,4 @@
+fuel-capacity-seconds: 15
 stages:
   fuel:
     animation-path: ""
