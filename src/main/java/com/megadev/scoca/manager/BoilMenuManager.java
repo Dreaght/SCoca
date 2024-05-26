@@ -2,11 +2,8 @@ package com.megadev.scoca.manager;
 
 import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.object.boil.BoilState;
-import com.megadev.scoca.object.boil.BoilerState;
-import com.megadev.scoca.object.boil.FurnaceState;
-import com.megadev.scoca.object.content.ContentStack;
-import com.megadev.scoca.object.content.SCocaBlock;
 import com.megadev.scoca.object.content.BoilMenu;
+import com.megadev.scoca.object.content.SCocaBlock;
 import dev.mega.megacore.MegaCore;
 import dev.mega.megacore.manager.Manager;
 import lombok.Getter;
@@ -43,22 +40,15 @@ public class BoilMenuManager extends Manager {
     public void openMenu(UUID uuid, SCocaBlock sCocaBlock) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) return;
-
         if (sCocaBlock == null) return;
 
-        ContentStack contentStack = sCocaBlock.getContentStack();
-        if (contentStack == null) return;
+        BoilState boilState = BoilManager.getInstance().getBoilState(uuid, sCocaBlock);
 
-        BoilState boilState = switch (contentStack) {
-            case FURNACE -> new FurnaceState(uuid, sCocaBlock);
-            case BOILER -> new BoilerState(uuid, sCocaBlock);
-            default -> null;
-        };
-        if (boilState == null) return;
-
-        BoilMenu boilMenu = BoilManager.getInstance().verifyAndGetMenu(uuid, boilState);
-        if (boilMenu == null) return;
-
+        BoilMenu boilMenu = boilState.getBoilMenu();
+        if (boilMenu == null) {
+            player.sendMessage("Boil menu has not loaded yet! Try again!");
+            return;
+        }
         boilMenu.open(player);
     }
 }

@@ -9,8 +9,8 @@ import org.bukkit.plugin.Plugin;
 /**
  * Represents a manager that contains Config objects.
  */
-public class AnimationManager extends AbstractManager {
-    public AnimationManager(Plugin plugin, String dataFolder) {
+public class AnimationConfigManager extends AbstractManager {
+    public AnimationConfigManager(Plugin plugin, String dataFolder) {
         super(plugin, dataFolder);
 
         addConfig(MenuManager.class, new MenuManager(plugin, dataFolder + "/menu"));

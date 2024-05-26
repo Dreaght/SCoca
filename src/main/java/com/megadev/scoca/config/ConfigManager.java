@@ -1,6 +1,6 @@
 package com.megadev.scoca.config;
 
-import com.megadev.scoca.config.animation.AnimationManager;
+import com.megadev.scoca.config.animation.AnimationConfigManager;
 import dev.mega.megacore.config.AbstractManager;
 import dev.mega.megacore.config.Config;
 import org.bukkit.plugin.Plugin;
@@ -14,7 +14,7 @@ public class ConfigManager extends AbstractManager {
     private ConfigManager(Plugin plugin) {
         super(plugin, ".");
 
-        addConfigSafely(AnimationManager.class, new AnimationManager(plugin, "animation"));
+        addConfigSafely(AnimationConfigManager.class, new AnimationConfigManager(plugin, "animation"));
 
         addConfigSafely(SettingsConfig.class, new SettingsConfig(plugin, "config"));
         addConfigSafely(MenuConfig.class, new MenuConfig(plugin, "menu"));
