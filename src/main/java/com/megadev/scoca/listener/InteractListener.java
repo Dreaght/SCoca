@@ -49,11 +49,9 @@ public class InteractListener implements Listener {
         ItemStack itemStack = event.getItemDrop().getItemStack().clone();
         itemStack.setAmount(1);
 
-        PluginStack pluginStack = PluginStackFactory.getPluginStack(itemStack);
+        PluginStack pluginStack = itemManager.validateAndGetSCocaItem(uuid, PluginStackFactory.getPluginStack(itemStack));
 
-        PluginStack sCocaItem = itemManager.validateAndGetSCocaItem(uuid, pluginStack);
-
-        if (sCocaItem != null) {
+        if (pluginStack != null) {
             event.setCancelled(true);
         }
     }

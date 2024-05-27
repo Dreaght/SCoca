@@ -40,12 +40,12 @@ public class BoilMenuManager extends Manager {
         menuData = null;
     }
 
-    public void openMenu(UUID uuid, PluginBlock sCocaBlock) {
+    public void openMenu(UUID uuid, PluginBlock pluginBlock) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) return;
-        if (sCocaBlock == null) return;
+        if (pluginBlock == null) return;
 
-        BoilState boilState = BoilManager.getInstance().getBoilState(uuid, sCocaBlock);
+        BoilState boilState = BoilManager.getInstance().getBoilState(uuid, pluginBlock);
 
         BoilMenu boilMenu = boilState.getAnimationInterpreter().getBoilMenu();
         if (boilMenu == null) {

@@ -38,7 +38,6 @@ public final class SCoca extends MegaCore {
 
         BoilManager.init(this);
         BoilManager.getInstance().reload();
-
     }
 
     private void setupCommands() {

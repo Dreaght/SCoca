@@ -65,6 +65,7 @@ public class BoilManager extends Manager {
         }
 
         boilState.stopAnimation();
+        boilData.removeValueForUuid(uuid, boilState);
     }
 
     private BoilState getNewBoilState(PluginBlock pluginBlock) {
