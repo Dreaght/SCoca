@@ -12,7 +12,9 @@ import com.megadev.scoca.util.MetaUtil;
 import dev.mega.megacore.MegaCore;
 import dev.mega.megacore.manager.Manager;
 import lombok.Getter;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class BoilManager extends Manager {
@@ -47,6 +49,8 @@ public class BoilManager extends Manager {
         if (boilState == null) {
             boilState = getNewBoilState(pluginBlock);
             boilState.startDefaultAnimation();
+            boilState.startLifecycle();
+
             boilData.addValueForUuid(uuid, boilState);
         }
 
@@ -65,7 +69,13 @@ public class BoilManager extends Manager {
 
     private BoilState getNewBoilState(PluginBlock pluginBlock) {
         PluginStack pluginStack = pluginBlock.getPluginStack();
-        ContentStack contentStack = ContentStack.valueOf(MetaUtil.getItemMeta(pluginStack.getItemStack(), "content"));
+
+        ContentStack contentStack = ContentStack.getContentStack(MetaUtil.getItemMeta(pluginStack.getItemStack(), "content"));
+
+        if (contentStack == null) {
+            return null;
+        }
+
         BoilBlock boilBlock = BoilBlock.valueOf(contentStack.name());
 
         return switch (boilBlock) {

@@ -2,6 +2,8 @@ package com.megadev.scoca.util;
 
 import com.megadev.scoca.object.content.Ingredient;
 import com.megadev.scoca.object.menu.MenuState;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +31,24 @@ public class MenuStateUtil {
                 return slot.index();
             }
         }
+        return 0;
+    }
+
+    public static int getIngredientIndex(Inventory inventory, Ingredient ingredient) {
+        ItemStack[] contents = inventory.getContents();
+
+        int index = 0;
+
+        for (ItemStack itemStack : contents) {
+            String content = MetaUtil.getItemMeta(itemStack, "content");
+
+            if (ingredient.getTitle().equals(content)) {
+                return index;
+            }
+
+            index++;
+        }
+
         return 0;
     }
 }

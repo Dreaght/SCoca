@@ -5,13 +5,24 @@ import com.megadev.scoca.config.MenuConfig;
 import com.megadev.scoca.config.animation.AnimationConfigManager;
 import com.megadev.scoca.object.animation.Animation;
 import com.megadev.scoca.object.block.PluginBlock;
+import com.megadev.scoca.object.content.BoilMenu;
+import com.megadev.scoca.object.content.Ingredient;
+import com.megadev.scoca.object.item.PluginStack;
 import com.megadev.scoca.object.menu.DefaultAnimationPath;
 import com.megadev.scoca.manager.AnimationManager;
+import com.megadev.scoca.util.MenuStateUtil;
+import com.megadev.scoca.util.MetaUtil;
 import dev.mega.megacore.MegaCore;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 public abstract class BoilState {
@@ -19,6 +30,8 @@ public abstract class BoilState {
     protected final MegaCore megaCore;
     protected final PluginBlock pluginBlock;
     @Setter protected AnimationManager animationInterpreter;
+
+    protected final Map<Integer, PluginStack> ingredientMap = new ConcurrentHashMap<>();
 
     public BoilState(MegaCore megaCore, PluginBlock pluginBlock) {
         this.megaCore = megaCore;
@@ -33,9 +46,19 @@ public abstract class BoilState {
         return Objects.equals(getPluginBlock(), that.getPluginBlock());
     }
 
+    public void startLifecycle() {
+        executeLifecycle();
+    }
+
+    protected abstract void executeLifecycle();
+
+//    public ItemStack[] getFilledContents(ItemStack[] contents) {
+//        return
+//    }
+
     public void startDefaultAnimation() {
         Animation animation = getDefaultAnimation();
-        animationInterpreter = new AnimationManager(megaCore, pluginBlock.getLocation(), null, animation);
+        animationInterpreter = new AnimationManager(megaCore, pluginBlock, null, animation);
         animationInterpreter.reload();
     }
 
@@ -52,6 +75,50 @@ public abstract class BoilState {
         AnimationConfigManager animationManager = configManager.getManager(AnimationConfigManager.class);
         return animationManager.getAnimationConfig(defaultAnimPath).getAnimation();
     }
+
+    public @Nullable PluginStack claimItem(int slot) {
+        ItemStack itemStack = animationInterpreter.getBoilMenu().getInventory().getItem(slot);
+
+        for (Map.Entry<Integer, PluginStack> entry : ingredientMap.entrySet()) {
+            if (entry.getValue().getItemStack().equals(itemStack)) {
+                PluginStack foundStack = entry.getValue();
+                foundStack.getItemStack().setAmount(foundStack.getItemStack().getAmount() - 1);
+                return foundStack;
+            }
+        }
+        return null;
+    }
+
+    public @Nullable PluginStack claimAllItems(int slot) {
+        return null;
+    }
+
+    public boolean injectItem(PluginStack pluginStack) {
+        if (pluginStack.getItemStack() == null || !pluginStack.getItemStack().hasItemMeta()) return false;
+
+        String content = MetaUtil.getItemMeta(pluginStack.getItemStack(), "content");
+        Ingredient ingredient = Ingredient.getIngredient(content);
+
+        if (ingredient == null) {
+            return false;
+        }
+
+        int ingredientIndex = getIngredientIndex(ingredient);
+        if (ingredientIndex < 0) return false;
+
+        PluginStack ingredientPluginStack = ingredientMap.get(ingredientIndex);
+
+        if (ingredientPluginStack == null) {
+            ingredientMap.put(ingredientIndex, pluginStack);
+        } else {
+            ItemStack itemStack = ingredientMap.get(ingredientIndex).getItemStack();
+            itemStack.setAmount(itemStack.getAmount() + 1);
+        }
+
+        return true;
+    }
+
+    public abstract int getIngredientIndex(Ingredient ingredient);
 
     public abstract BoilBlock getBoilBlock();
 }

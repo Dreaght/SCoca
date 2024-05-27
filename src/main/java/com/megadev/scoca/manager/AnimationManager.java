@@ -5,12 +5,11 @@ import com.megadev.scoca.config.animation.AnimationConfigManager;
 import com.megadev.scoca.config.animation.menu.MenuStateConfig;
 import com.megadev.scoca.config.animation.menu.MenuStateManager;
 import com.megadev.scoca.object.animation.Animation;
+import com.megadev.scoca.object.block.PluginBlock;
 import com.megadev.scoca.object.content.BoilMenu;
 import dev.mega.megacore.MegaCore;
 import dev.mega.megacore.manager.Manager;
-import dev.mega.megacore.util.Color;
 import lombok.Getter;
-import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,16 +19,16 @@ import java.util.concurrent.atomic.AtomicLong;
 public class AnimationManager extends Manager {
     private final static ConfigManager configManager = ConfigManager.getInstance();
 
-    private final Location location;
+    private final PluginBlock pluginBlock;
     private BoilMenu boilMenu;
     private final Animation animation;
 
     private BukkitRunnable task;
 
-    public AnimationManager(MegaCore megaCore, Location location, BoilMenu boilMenu, Animation animation) {
+    public AnimationManager(MegaCore megaCore, PluginBlock pluginBlock, BoilMenu boilMenu, Animation animation) {
         super(megaCore);
 
-        this.location = location;
+        this.pluginBlock = pluginBlock;
         this.boilMenu = boilMenu;
         this.animation = animation;
     }
@@ -63,10 +62,10 @@ public class AnimationManager extends Manager {
                             MenuStateConfig menuStateConfig = getMenuStateConfig(value);
 
                             if (boilMenu == null) {
-                                boilMenu = menuStateConfig.getBoilMenu(location);
+                                boilMenu = menuStateConfig.getBoilMenu(pluginBlock);
                             }
 
-                            boilMenu.getInventory().setContents(menuStateConfig.getBoilMenu(location).getInventory().getContents());
+                            boilMenu.getInventory().setContents(menuStateConfig.getBoilMenu(pluginBlock).getInventory().getContents());
                         }
                         case PARTICLE -> {
                             // Code to spawn particle

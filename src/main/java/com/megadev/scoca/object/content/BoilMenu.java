@@ -1,8 +1,14 @@
 package com.megadev.scoca.object.content;
 
 import com.megadev.scoca.manager.BoilManager;
-import com.megadev.scoca.manager.BoilMenuManager;
+import com.megadev.scoca.manager.ItemManager;
 import com.megadev.scoca.object.block.PluginBlock;
+import com.megadev.scoca.object.boil.BoilState;
+import com.megadev.scoca.object.boil.FurnaceState;
+import com.megadev.scoca.object.item.PluginStack;
+import com.megadev.scoca.object.menu.MenuState;
+import com.megadev.scoca.util.MenuStateUtil;
+import com.megadev.scoca.util.PluginStackFactory;
 import dev.mega.megacore.inventory.MegaInventory;
 import lombok.Getter;
 import org.bukkit.Location;
@@ -14,26 +20,48 @@ import java.util.UUID;
 
 @Getter
 public class BoilMenu extends MegaInventory {
-    private final Location location;
+    private final PluginBlock pluginBlock;
     private final int size;
 
-    public BoilMenu(Location location, int size, String title) {
+    public BoilMenu(PluginBlock pluginBlock, int size, String title) {
         super(size, title);
-        this.location = location;
+        this.pluginBlock = pluginBlock;
         this.size = size;
+    }
+
+    public static BoilMenu of(MenuState menuState, Location location) {
+        return of(menuState, new PluginBlock(null, location));
+    }
+
+    public static BoilMenu of(MenuState menuState, PluginBlock pluginBlock) {
+        BoilMenu boilMenu = new BoilMenu(pluginBlock, MenuStateUtil.getSize(menuState), menuState.title());
+        menuState.slots().forEach(slot -> boilMenu.setItem(slot.index(), slot.slotPattern().pluginStack().getItemStack()));
+
+        return boilMenu;
     }
 
     @Override
     public void onClick(InventoryClickEvent event) {
         UUID uuid = event.getWhoClicked().getUniqueId();
 
-        ItemStack itemStack = event.getCursor();
-        System.out.println("clickedInv: " + event.getClickedInventory());
+        ItemStack itemStack = event.getCurrentItem();
 
         boolean isMenu = event.getRawSlot() == event.getSlot();
 
+        BoilState boilState = BoilManager.getInstance().getBoilState(uuid, new PluginBlock(pluginBlock.getPluginStack(), pluginBlock.getLocation()));
+
         if (isMenu) {
-            BoilManager.getInstance().getBoilState(uuid, new PluginBlock(null, location));
+            PluginStack pluginStack = boilState.claimItem(event.getSlot());
+            if (pluginStack != null) {
+                event.getWhoClicked().getInventory().addItem(pluginStack.getItemStack());
+                ItemManager.getInstance().addItem(uuid, pluginStack);
+            }
+
+            System.out.println(pluginBlock.getLocation());
+        } else {
+            boilState.injectItem(PluginStackFactory.getPluginStack(itemStack));
+            if (itemStack != null)
+                itemStack.setAmount(0);
         }
     }
 
@@ -42,6 +70,6 @@ public class BoilMenu extends MegaInventory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BoilMenu that = (BoilMenu) o;
-        return Objects.equals(getLocation(), that.getLocation());
+        return Objects.equals(getPluginBlock(), that.getPluginBlock());
     }
 }

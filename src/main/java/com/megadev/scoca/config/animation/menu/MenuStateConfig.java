@@ -2,6 +2,7 @@ package com.megadev.scoca.config.animation.menu;
 
 import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.config.MenuConfig;
+import com.megadev.scoca.object.block.PluginBlock;
 import com.megadev.scoca.object.content.BoilMenu;
 import com.megadev.scoca.object.content.Ingredient;
 import com.megadev.scoca.object.item.BukkitItemStack;
@@ -58,7 +59,18 @@ public class MenuStateConfig extends Configurator {
 
         String title = Color.getTranslated(menuState.title());
 
-        BoilMenu boilMenu = new BoilMenu(location, MenuStateUtil.getSize(menuState), title);
+        BoilMenu boilMenu = new BoilMenu(new PluginBlock(null, location), MenuStateUtil.getSize(menuState), title);
+        fillItems(boilMenu, menuState);
+
+        return boilMenu;
+    }
+
+    public BoilMenu getBoilMenu(PluginBlock pluginBlock) {
+        MenuState menuState = getMenuState();
+
+        String title = Color.getTranslated(menuState.title());
+
+        BoilMenu boilMenu = new BoilMenu(pluginBlock, MenuStateUtil.getSize(menuState), title);
         fillItems(boilMenu, menuState);
 
         return boilMenu;
