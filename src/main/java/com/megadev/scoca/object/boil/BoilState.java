@@ -4,7 +4,7 @@ import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.config.MenuConfig;
 import com.megadev.scoca.config.animation.AnimationConfigManager;
 import com.megadev.scoca.object.animation.Animation;
-import com.megadev.scoca.object.content.SCocaBlock;
+import com.megadev.scoca.object.block.PluginBlock;
 import com.megadev.scoca.object.menu.DefaultAnimationPath;
 import com.megadev.scoca.manager.AnimationManager;
 import dev.mega.megacore.MegaCore;
@@ -17,12 +17,12 @@ import java.util.Objects;
 public abstract class BoilState {
     protected static final ConfigManager configManager = ConfigManager.getInstance();
     protected final MegaCore megaCore;
-    protected final SCocaBlock sCocaBlock;
+    protected final PluginBlock pluginBlock;
     @Setter protected AnimationManager animationInterpreter;
 
-    public BoilState(MegaCore megaCore, SCocaBlock sCocaBlock) {
+    public BoilState(MegaCore megaCore, PluginBlock pluginBlock) {
         this.megaCore = megaCore;
-        this.sCocaBlock = sCocaBlock;
+        this.pluginBlock = pluginBlock;
     }
 
     @Override
@@ -30,12 +30,12 @@ public abstract class BoilState {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BoilState that = (BoilState) o;
-        return Objects.equals(getSCocaBlock(), that.getSCocaBlock());
+        return Objects.equals(getPluginBlock(), that.getPluginBlock());
     }
 
     public void startDefaultAnimation() {
         Animation animation = getDefaultAnimation();
-        animationInterpreter = new AnimationManager(megaCore, sCocaBlock.getPluginBlock().getLocation(), null, animation);
+        animationInterpreter = new AnimationManager(megaCore, pluginBlock.getLocation(), null, animation);
         animationInterpreter.reload();
     }
 

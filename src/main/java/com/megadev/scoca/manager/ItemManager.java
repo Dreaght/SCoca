@@ -1,10 +1,12 @@
 package com.megadev.scoca.manager;
 
-import com.megadev.scoca.object.content.SCocaItem;
+import com.megadev.scoca.object.item.PluginStack;
 import com.megadev.scoca.storage.ItemData;
 import dev.mega.megacore.MegaCore;
 import dev.mega.megacore.manager.Manager;
 import lombok.Getter;
+
+import java.util.UUID;
 
 public class ItemManager extends Manager {
     @Getter private static ItemManager instance;
@@ -30,25 +32,25 @@ public class ItemManager extends Manager {
         itemData = null;
     }
 
-    public boolean isRegistered(SCocaItem block) {
+    public boolean isRegistered(PluginStack block) {
         if (block != null) {
             return itemData.contains(block);
         }
         return false;
     }
 
-    public SCocaItem validateAndGetSCocaItem(SCocaItem sCocaItem) {
-        return itemData.getRegistered(sCocaItem.getUuid(), sCocaItem);
+    public PluginStack validateAndGetSCocaItem(UUID uuid, PluginStack pluginStack) {
+        return itemData.getRegistered(uuid, pluginStack);
     }
 
-    public void addItem(SCocaItem pluginStack) {
+    public void addItem(UUID uuid, PluginStack pluginStack) {
         if (itemData != null) {
-            itemData.addValueForUuid(pluginStack.getUuid(), pluginStack);
-            System.out.println("items: " + itemData.getValue(pluginStack.getUuid()));
+            itemData.addValueForUuid(uuid, pluginStack);
+            System.out.println("items: " + itemData.getValue(uuid));
         }
     }
 
-    public void removeItem(SCocaItem pluginStack) {
+    public void removeItem(PluginStack pluginStack) {
         if (itemData != null) {
             itemData.removeValue(pluginStack);
         }

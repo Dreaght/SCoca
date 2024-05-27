@@ -1,12 +1,14 @@
 package com.megadev.scoca.manager;
 
+import com.megadev.scoca.object.block.PluginBlock;
 import com.megadev.scoca.object.boil.BoilBlock;
 import com.megadev.scoca.object.boil.BoilState;
 import com.megadev.scoca.object.boil.BoilerState;
 import com.megadev.scoca.object.boil.FurnaceState;
 import com.megadev.scoca.object.content.ContentStack;
-import com.megadev.scoca.object.content.SCocaBlock;
+import com.megadev.scoca.object.item.PluginStack;
 import com.megadev.scoca.storage.BoilData;
+import com.megadev.scoca.util.MetaUtil;
 import dev.mega.megacore.MegaCore;
 import dev.mega.megacore.manager.Manager;
 import lombok.Getter;
@@ -39,11 +41,11 @@ public class BoilManager extends Manager {
         boilData = null;
     }
 
-    public BoilState getBoilState(UUID uuid, SCocaBlock sCocaBlock) {
-        BoilState boilState = boilData.getRegistered(uuid, getNewBoilState(sCocaBlock));
+    public BoilState getBoilState(UUID uuid, PluginBlock pluginBlock) {
+        BoilState boilState = boilData.getRegistered(uuid, getNewBoilState(pluginBlock));
 
         if (boilState == null) {
-            boilState = getNewBoilState(sCocaBlock);
+            boilState = getNewBoilState(pluginBlock);
             boilState.startDefaultAnimation();
             boilData.addValueForUuid(uuid, boilState);
         }
@@ -51,8 +53,8 @@ public class BoilManager extends Manager {
         return boilState;
     }
 
-    public void removeBoilState(UUID uuid, SCocaBlock sCocaBlock) {
-        BoilState boilState = boilData.getRegistered(uuid, sCocaBlock.getPluginBlock().getLocation());
+    public void removeBoilState(UUID uuid, PluginBlock pluginBlock) {
+        BoilState boilState = boilData.getRegistered(uuid, pluginBlock.getLocation());
 
         if (boilState == null) {
             return;
@@ -61,13 +63,14 @@ public class BoilManager extends Manager {
         boilState.stopAnimation();
     }
 
-    private BoilState getNewBoilState(SCocaBlock sCocaBlock) {
-        ContentStack contentStack = sCocaBlock.getContentStack();
+    private BoilState getNewBoilState(PluginBlock pluginBlock) {
+        PluginStack pluginStack = pluginBlock.getPluginStack();
+        ContentStack contentStack = ContentStack.valueOf(MetaUtil.getItemMeta(pluginStack.getItemStack(), "content"));
         BoilBlock boilBlock = BoilBlock.valueOf(contentStack.name());
 
         return switch (boilBlock) {
-            case FURNACE -> new FurnaceState(megaCore, sCocaBlock);
-            case BOILER -> new BoilerState(megaCore, sCocaBlock);
+            case FURNACE -> new FurnaceState(megaCore, pluginBlock);
+            case BOILER -> new BoilerState(megaCore, pluginBlock);
         };
     }
 

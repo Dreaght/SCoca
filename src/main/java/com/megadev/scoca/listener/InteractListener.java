@@ -4,8 +4,6 @@ import com.megadev.scoca.manager.BlockManager;
 import com.megadev.scoca.manager.ItemManager;
 import com.megadev.scoca.manager.BoilMenuManager;
 import com.megadev.scoca.object.block.PluginBlock;
-import com.megadev.scoca.object.content.SCocaBlock;
-import com.megadev.scoca.object.content.SCocaItem;
 import com.megadev.scoca.object.item.PluginStack;
 import com.megadev.scoca.util.PluginStackFactory;
 import org.bukkit.block.Block;
@@ -18,13 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class InteractListener implements Listener {
     private final static ItemManager itemManager = ItemManager.getInstance();
@@ -44,10 +36,10 @@ public class InteractListener implements Listener {
         Block block = event.getClickedBlock();
 
         if (block != null) {
-            PluginBlock pluginBlock = new PluginBlock(null, block.getLocation());
-            SCocaBlock sCocaBlock = blockManager.validateAndGetSCocaBlock(new SCocaBlock(uuid, pluginBlock));
+            PluginBlock pluginBlock = blockManager.validateAndGetPluginBlock(
+                    uuid, new PluginBlock(null, block.getLocation()));
 
-            BoilMenuManager.getInstance().openMenu(uuid, sCocaBlock);
+            BoilMenuManager.getInstance().openMenu(uuid, pluginBlock);
         }
     }
 
@@ -59,7 +51,7 @@ public class InteractListener implements Listener {
 
         PluginStack pluginStack = PluginStackFactory.getPluginStack(itemStack);
 
-        SCocaItem sCocaItem = itemManager.validateAndGetSCocaItem(new SCocaItem(uuid, pluginStack));
+        PluginStack sCocaItem = itemManager.validateAndGetSCocaItem(uuid, pluginStack);
 
         if (sCocaItem != null) {
             event.setCancelled(true);

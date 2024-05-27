@@ -1,5 +1,8 @@
 package com.megadev.scoca.object.content;
 
+import com.megadev.scoca.manager.BoilManager;
+import com.megadev.scoca.manager.BoilMenuManager;
+import com.megadev.scoca.object.block.PluginBlock;
 import dev.mega.megacore.inventory.MegaInventory;
 import lombok.Getter;
 import org.bukkit.Location;
@@ -7,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 public class BoilMenu extends MegaInventory {
@@ -21,12 +25,16 @@ public class BoilMenu extends MegaInventory {
 
     @Override
     public void onClick(InventoryClickEvent event) {
+        UUID uuid = event.getWhoClicked().getUniqueId();
+
         ItemStack itemStack = event.getCursor();
         System.out.println("clickedInv: " + event.getClickedInventory());
 
         boolean isMenu = event.getRawSlot() == event.getSlot();
 
-
+        if (isMenu) {
+            BoilManager.getInstance().getBoilState(uuid, new PluginBlock(null, location));
+        }
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.megadev.scoca.object.boil;
 
-import com.megadev.scoca.object.content.SCocaBlock;
+import com.megadev.scoca.object.block.PluginBlock;
 import com.megadev.scoca.object.item.PluginStack;
 import com.megadev.scoca.util.MetaUtil;
 import dev.mega.megacore.MegaCore;
@@ -18,8 +18,8 @@ public class FurnaceState extends BoilState {
     private PluginStack thirdIngredient; // herb
     private PluginStack fourthIngredient; // meph
 
-    public FurnaceState(MegaCore megaCore, SCocaBlock sCocaBlock) {
-        super(megaCore, sCocaBlock);
+    public FurnaceState(MegaCore megaCore, PluginBlock pluginBlock) {
+        super(megaCore, pluginBlock);
 
         startLifecycle();
     }

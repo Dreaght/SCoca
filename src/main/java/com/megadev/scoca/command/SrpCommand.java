@@ -5,13 +5,13 @@ import co.aikar.commands.annotation.*;
 import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.config.ItemsConfig;
 import com.megadev.scoca.manager.ItemManager;
-import com.megadev.scoca.object.content.SCocaItem;
 import com.megadev.scoca.object.item.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 
 @CommandAlias("srp")
 public class SrpCommand extends BaseCommand {
@@ -33,16 +33,13 @@ public class SrpCommand extends BaseCommand {
             if (itemName.equals(item.title())) {
                 for (int i = 0; i < amount; i++) {
                     player.getInventory().addItem(item.pluginStack().getItemStack());
-
-                    SCocaItem sCocaItem = new SCocaItem(player.getUniqueId(), item.pluginStack());
-                    ItemManager.getInstance().addItem(sCocaItem);
+                    ItemManager.getInstance().addItem(player.getUniqueId(), item.pluginStack());
                 }
-
                 return;
             }
         }
 
-        sender.sendMessage("matched block not found");
+        sender.sendMessage("Matched block was not found!");
     }
 
 }
