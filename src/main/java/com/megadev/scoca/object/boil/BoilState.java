@@ -5,21 +5,17 @@ import com.megadev.scoca.config.MenuConfig;
 import com.megadev.scoca.config.animation.AnimationConfigManager;
 import com.megadev.scoca.object.animation.Animation;
 import com.megadev.scoca.object.block.PluginBlock;
-import com.megadev.scoca.object.content.BoilMenu;
 import com.megadev.scoca.object.content.Ingredient;
 import com.megadev.scoca.object.item.PluginStack;
 import com.megadev.scoca.object.menu.DefaultAnimationPath;
-import com.megadev.scoca.manager.AnimationManager;
-import com.megadev.scoca.util.MenuStateUtil;
+import com.megadev.scoca.manager.animation.AnimationInterpreter;
 import com.megadev.scoca.util.MetaUtil;
 import dev.mega.megacore.MegaCore;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,7 +25,7 @@ public abstract class BoilState {
     protected static final ConfigManager configManager = ConfigManager.getInstance();
     protected final MegaCore megaCore;
     protected final PluginBlock pluginBlock;
-    @Setter protected AnimationManager animationInterpreter;
+    @Setter protected AnimationInterpreter animationInterpreter;
 
     protected final Map<Integer, PluginStack> ingredientMap = new ConcurrentHashMap<>();
 
@@ -58,7 +54,7 @@ public abstract class BoilState {
 
     public void startDefaultAnimation() {
         Animation animation = getDefaultAnimation();
-        animationInterpreter = new AnimationManager(megaCore, pluginBlock, null, animation);
+        animationInterpreter = new AnimationInterpreter(megaCore, pluginBlock, null, animation);
         animationInterpreter.reload();
     }
 

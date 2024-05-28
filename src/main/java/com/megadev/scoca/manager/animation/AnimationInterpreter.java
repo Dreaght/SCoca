@@ -1,4 +1,4 @@
-package com.megadev.scoca.manager;
+package com.megadev.scoca.manager.animation;
 
 import com.megadev.scoca.config.ConfigManager;
 import com.megadev.scoca.config.animation.AnimationConfigManager;
@@ -12,11 +12,12 @@ import dev.mega.megacore.manager.Manager;
 import lombok.Getter;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Getter
-public class AnimationManager extends Manager {
+public class AnimationInterpreter extends Manager {
     private final static ConfigManager configManager = ConfigManager.getInstance();
 
     private final PluginBlock pluginBlock;
@@ -25,12 +26,20 @@ public class AnimationManager extends Manager {
 
     private BukkitRunnable task;
 
-    public AnimationManager(MegaCore megaCore, PluginBlock pluginBlock, BoilMenu boilMenu, Animation animation) {
+    public AnimationInterpreter(MegaCore megaCore, PluginBlock pluginBlock, BoilMenu boilMenu, Animation animation) {
         super(megaCore);
 
         this.pluginBlock = pluginBlock;
         this.boilMenu = boilMenu;
         this.animation = animation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AnimationInterpreter that = (AnimationInterpreter) o;
+        return Objects.equals(getPluginBlock(), that.getPluginBlock());
     }
 
     public void startAnimation() {
