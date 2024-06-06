@@ -39,6 +39,11 @@ public class BoilManager extends Manager {
     }
 
     @Override
+    public void enable() {
+
+    }
+
+    @Override
     public void disable() {
         boilData = null;
     }

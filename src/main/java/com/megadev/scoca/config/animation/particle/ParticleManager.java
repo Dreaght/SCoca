@@ -1,12 +1,12 @@
 package com.megadev.scoca.config.animation.particle;
 
-import dev.mega.megacore.config.AbstractManager;
+import dev.mega.megacore.config.SubFolder;
 import org.bukkit.plugin.Plugin;
 
 /**
  * Represents a manager to access particle configs.
  */
-public class ParticleManager extends AbstractManager {
+public class ParticleManager extends SubFolder {
     public ParticleManager(Plugin plugin, String dataFolder) {
         super(plugin, dataFolder);
     }

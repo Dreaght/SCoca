@@ -28,6 +28,11 @@ public class ItemManager extends Manager {
     }
 
     @Override
+    public void enable() {
+
+    }
+
+    @Override
     public void disable() {
         itemData = null;
     }

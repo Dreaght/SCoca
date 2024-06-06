@@ -25,7 +25,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:5.8.0'
     testCompileOnly(compileOnly 'org.jetbrains:annotations:24.1.0')
 
-    implementation files('libs/megacore-1.1-beta.jar')
+    implementation files('libs/megacore-1.2-beta.jar')
 
     implementation "co.aikar:acf-paper:0.5.1-SNAPSHOT"
 }

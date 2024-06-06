@@ -36,6 +36,11 @@ public class BoilMenuManager extends Manager {
     }
 
     @Override
+    public void enable() {
+
+    }
+
+    @Override
     public void disable() {
         menuData = null;
     }

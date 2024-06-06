@@ -1,9 +1,9 @@
 package com.megadev.scoca.config.animation.menu;
 
-import dev.mega.megacore.config.AbstractManager;
+import dev.mega.megacore.config.SubFolder;
 import org.bukkit.plugin.Plugin;
 
-public class MenuStateManager extends AbstractManager {
+public class MenuStateManager extends SubFolder {
     public MenuStateManager(Plugin plugin, String dataFolder) {
         super(plugin, dataFolder);
     }

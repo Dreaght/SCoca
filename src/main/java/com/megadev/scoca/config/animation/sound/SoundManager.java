@@ -1,12 +1,12 @@
 package com.megadev.scoca.config.animation.sound;
 
-import dev.mega.megacore.config.AbstractManager;
+import dev.mega.megacore.config.SubFolder;
 import org.bukkit.plugin.Plugin;
 
 /**
  * Represents a manager to access sound configs.
  */
-public class SoundManager extends AbstractManager {
+public class SoundManager extends SubFolder {
     public SoundManager(Plugin plugin, String dataFolder) {
         super(plugin, dataFolder);
     }

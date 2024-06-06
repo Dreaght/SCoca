@@ -3,13 +3,13 @@ package com.megadev.scoca.config.animation;
 import com.megadev.scoca.config.animation.particle.ParticleManager;
 import com.megadev.scoca.config.animation.sound.SoundManager;
 import com.megadev.scoca.config.animation.menu.MenuStateManager;
-import dev.mega.megacore.config.AbstractManager;
+import dev.mega.megacore.config.SubFolder;
 import org.bukkit.plugin.Plugin;
 
 /**
  * Represents a manager that contains Config objects.
  */
-public class AnimationConfigManager extends AbstractManager {
+public class AnimationConfigManager extends SubFolder {
     public AnimationConfigManager(Plugin plugin, String dataFolder) {
         super(plugin, dataFolder);
 

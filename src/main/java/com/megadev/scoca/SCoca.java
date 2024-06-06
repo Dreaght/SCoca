@@ -11,15 +11,21 @@ import com.megadev.scoca.manager.BoilManager;
 import com.megadev.scoca.manager.ItemManager;
 import com.megadev.scoca.manager.BoilMenuManager;
 import dev.mega.megacore.MegaCore;
+import dev.mega.megacore.config.SubFolder;
 import dev.mega.megacore.inventory.MenuManager;
 import org.bukkit.plugin.PluginManager;
 
 public final class SCoca extends MegaCore {
 
+    public SCoca() {
+        super(null,
+                "com.megadev.scoca.manager",
+                "");
+    }
+
     @Override
     public void enable() {
         setupManagers();
-        setupCommands();
         registerListeners();
     }
 
@@ -41,12 +47,7 @@ public final class SCoca extends MegaCore {
     }
 
     private void setupCommands() {
-        PaperCommandManager manager = new PaperCommandManager(this);
-        manager.registerCommand(new SrpCommand());
 
-        manager.getCommandCompletions().registerAsyncCompletion("item", c ->
-                ConfigManager.getInstance().getConfig(ItemsConfig.class).getAllMenuTitles()
-        );
 
     }
 
@@ -61,4 +62,13 @@ public final class SCoca extends MegaCore {
     public void disable() {
     }
 
+    @Override
+    protected void registerCommands() {
+        PaperCommandManager manager = new PaperCommandManager(this);
+        manager.registerCommand(new SrpCommand());
+
+        manager.getCommandCompletions().registerAsyncCompletion("item", c ->
+                ConfigManager.getInstance().getConfig(ItemsConfig.class).getAllMenuTitles()
+        );
+    }
 }
