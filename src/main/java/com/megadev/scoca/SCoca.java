@@ -19,7 +19,7 @@ public final class SCoca extends MegaCore {
 
     public SCoca() {
         super(null,
-                "com.megadev.scoca.manager",
+                "",
                 "");
     }
 

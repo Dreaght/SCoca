@@ -4,6 +4,7 @@ import com.megadev.scoca.object.item.BukkitItemStack;
 import com.megadev.scoca.object.item.ItemsAdderStack;
 import com.megadev.scoca.object.item.PluginStack;
 import dev.lone.itemsadder.api.CustomStack;
+import dev.mega.megacore.util.MegaCoreUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -35,13 +36,20 @@ public class PluginStackFactory {
 
     public static PluginStack getPluginStack(ItemStack itemStack) {
         PluginStack pluginStack;
-        CustomStack customStack = CustomStack.byItemStack(itemStack);
 
-        if (customStack != null) {
-            pluginStack = new ItemsAdderStack(customStack);
-        } else {
+        try {
+            CustomStack customStack = CustomStack.byItemStack(itemStack);
+            if (customStack != null) {
+                pluginStack = new ItemsAdderStack(customStack);
+            } else {
+                pluginStack = new BukkitItemStack(itemStack);
+            }
+
+        } catch (NoClassDefFoundError error) {
+            MegaCoreUtil.getLogger().severe("Please install correct version of ItemsAdder!");
             pluginStack = new BukkitItemStack(itemStack);
         }
+
         return pluginStack;
     }
 

@@ -31,13 +31,13 @@ public class BoilerState extends BoilState {
     }
 
     @Override
-    public boolean injectItem(PluginStack pluginStack) {
-        return false;
+    public int getIngredientIndex(Ingredient ingredient) {
+        return 0;
     }
 
     @Override
-    public int getIngredientIndex(Ingredient ingredient) {
-        return 1;
+    public Ingredient getIngredientByIndex(int index) {
+        return Ingredient.SALT;
     }
 
     @Override

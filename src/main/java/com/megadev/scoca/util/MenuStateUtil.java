@@ -40,6 +40,10 @@ public class MenuStateUtil {
         int index = 0;
 
         for (ItemStack itemStack : contents) {
+            if (itemStack == null){
+                index++;
+                continue;
+            }
             String content = MetaUtil.getItemMeta(itemStack, "content");
 
             if (ingredient.getTitle().equals(content)) {

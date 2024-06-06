@@ -2,7 +2,7 @@ name: SCoca
 version: '${version}'
 author: Dreaght
 main: com.megadev.scoca.SCoca
-api-version: '1.17'
+api-version: '1.20'
 commands:
   srp:
     description: "Get furnace or boiler"

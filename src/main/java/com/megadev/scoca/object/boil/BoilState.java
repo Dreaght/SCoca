@@ -54,7 +54,7 @@ public abstract class BoilState {
 
     public void startDefaultAnimation() {
         Animation animation = getDefaultAnimation();
-        animationInterpreter = new AnimationInterpreter(megaCore, pluginBlock, null, animation);
+        animationInterpreter = new AnimationInterpreter(megaCore, pluginBlock, null, animation, ingredientMap);
         animationInterpreter.reload();
     }
 
@@ -68,7 +68,7 @@ public abstract class BoilState {
 
         String defaultAnimPath = menuConfig.getDefaultAnimationPath(defaultAnimationPath);
 
-        AnimationConfigManager animationManager = configManager.getManager(AnimationConfigManager.class);
+        AnimationConfigManager animationManager = configManager.getConfig(AnimationConfigManager.class);
         return animationManager.getAnimationConfig(defaultAnimPath).getAnimation();
     }
 
@@ -95,26 +95,48 @@ public abstract class BoilState {
         String content = MetaUtil.getItemMeta(pluginStack.getItemStack(), "content");
         Ingredient ingredient = Ingredient.getIngredient(content);
 
-        if (ingredient == null) {
+        if (ingredient == null
+                || ingredient == Ingredient.MEPH
+                || ingredient == Ingredient.SALT) {
             return false;
         }
 
         int ingredientIndex = getIngredientIndex(ingredient);
         if (ingredientIndex < 0) return false;
 
-        PluginStack ingredientPluginStack = ingredientMap.get(ingredientIndex);
+        int alreadyAmount = 0;
+        if (ingredientMap.get(ingredientIndex) != null) {
+            alreadyAmount = ingredientMap.get(ingredientIndex).getItemStack().getAmount();
+        }
+        if (ingredientMap.get(ingredientIndex) != null)
+            if (ingredientMap.get(ingredientIndex).getItemStack().getAmount() >= 64) return false;
 
-        if (ingredientPluginStack == null) {
-            ingredientMap.put(ingredientIndex, pluginStack);
+        int amountInjected = pluginStack.getItemStack().getAmount();
+        int newAmount = (Math.min(64, alreadyAmount + amountInjected));
+        int toAdd = newAmount - alreadyAmount;
+
+        if (ingredientIndex == 0 && this instanceof FurnaceState) {
+            ((FurnaceState) this).addFuel(pluginStack);
         } else {
-            ItemStack itemStack = ingredientMap.get(ingredientIndex).getItemStack();
-            itemStack.setAmount(itemStack.getAmount() + 1);
+            PluginStack ingredientPluginStack = ingredientMap.get(ingredientIndex);
+
+            if (ingredientPluginStack == null) {
+                ingredientMap.put(ingredientIndex, pluginStack);
+            } else {
+                ItemStack itemStack = ingredientMap.get(ingredientIndex).getItemStack();
+                itemStack.setAmount(itemStack.getAmount() + toAdd);
+            }
         }
 
         return true;
     }
 
     public abstract int getIngredientIndex(Ingredient ingredient);
+
+    /**
+     * Gets an ingredient by its index.
+     */
+    public abstract Ingredient getIngredientByIndex(int index);
 
     public abstract BoilBlock getBoilBlock();
 }

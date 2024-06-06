@@ -10,6 +10,7 @@ import com.megadev.scoca.object.menu.MenuState;
 import com.megadev.scoca.util.MenuStateUtil;
 import com.megadev.scoca.util.PluginStackFactory;
 import dev.mega.megacore.inventory.MegaInventory;
+import dev.mega.megacore.util.MegaCoreUtil;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -59,9 +60,13 @@ public class BoilMenu extends MegaInventory {
 
             System.out.println(pluginBlock.getLocation());
         } else {
-            boilState.injectItem(PluginStackFactory.getPluginStack(itemStack));
-            if (itemStack != null)
+            if (itemStack != null) {
+                if (!boilState.injectItem(PluginStackFactory.getPluginStack(itemStack.clone()))) {
+                    MegaCoreUtil.getLogger().info("Can't inject item: " + pluginBlock.getPluginStack().getItemStack());
+                }
                 itemStack.setAmount(0);
+            }
+
         }
     }
 

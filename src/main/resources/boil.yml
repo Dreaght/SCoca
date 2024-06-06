@@ -1,10 +1,10 @@
 fuel-capacity-seconds: 15
 stages:
   fuel:
-    animation-path: ""
+    animation-path: "animation/furnace-default.yml"
   sulfur-to-salt:
-    animation-path: ""
+    animation-path: "animation/furnace-default.yml"
   salt-to-herb:
-    animation-path: ""
+    animation-path: "animation/furnace-default.yml"
   herb-to-meph:
-    animation-path: ""
+    animation-path: "animation/furnace-default.yml"

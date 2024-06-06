@@ -7,11 +7,17 @@ import com.megadev.scoca.config.animation.menu.MenuStateManager;
 import com.megadev.scoca.object.animation.Animation;
 import com.megadev.scoca.object.block.PluginBlock;
 import com.megadev.scoca.object.content.BoilMenu;
+import com.megadev.scoca.object.content.Ingredient;
+import com.megadev.scoca.object.item.PluginStack;
+import com.megadev.scoca.util.MenuStateUtil;
+import com.megadev.scoca.util.MetaUtil;
 import dev.mega.megacore.MegaCore;
 import dev.mega.megacore.manager.Manager;
 import lombok.Getter;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -24,14 +30,22 @@ public class AnimationInterpreter extends Manager {
     private BoilMenu boilMenu;
     private final Animation animation;
 
+    private Map<Integer, PluginStack> ingredientMaps;
+
     private BukkitRunnable task;
 
-    public AnimationInterpreter(MegaCore megaCore, PluginBlock pluginBlock, BoilMenu boilMenu, Animation animation) {
+    public AnimationInterpreter(
+            MegaCore megaCore,
+            PluginBlock pluginBlock,
+            BoilMenu boilMenu,
+            Animation animation,
+            Map<Integer, PluginStack> ingredientMaps) {
         super(megaCore);
 
         this.pluginBlock = pluginBlock;
         this.boilMenu = boilMenu;
         this.animation = animation;
+        this.ingredientMaps = ingredientMaps;
     }
 
     @Override
@@ -75,6 +89,24 @@ public class AnimationInterpreter extends Manager {
                             }
 
                             boilMenu.getInventory().setContents(menuStateConfig.getBoilMenu(pluginBlock).getInventory().getContents());
+
+                            for (Map.Entry<Integer, PluginStack> entry : ingredientMaps.entrySet()) {
+                                PluginStack stack = entry.getValue();
+
+                                if (stack == null || stack.getItemMeta() == null) continue;
+
+                                String content = MetaUtil.getItemMeta(stack.getItemMeta(), "content");
+                                Ingredient ingredient = Ingredient.getIngredient(content);
+
+                                int indexOfIngredient = MenuStateUtil.getIngredientIndex(boilMenu.getInventory(), ingredient);
+
+                                ItemStack[] items = boilMenu.getInventory().getContents();
+
+                                if (stack.getItemStack().getAmount() > 0)
+                                    items[indexOfIngredient] = stack.getItemStack();
+
+                                boilMenu.getInventory().setContents(items);
+                            }
                         }
                         case PARTICLE -> {
                             // Code to spawn particle
@@ -86,6 +118,8 @@ public class AnimationInterpreter extends Manager {
 
                 } else {
                     currentStepIndex.set(0);
+
+
                 }
             }
         };
@@ -93,14 +127,13 @@ public class AnimationInterpreter extends Manager {
     }
 
     private MenuStateConfig getMenuStateConfig(String path) {
-        AnimationConfigManager animationConfigManager = configManager.getManager(AnimationConfigManager.class);
-        MenuStateManager menuStateManager = animationConfigManager.getManager(MenuStateManager.class);
+        AnimationConfigManager animationConfigManager = configManager.getConfig(AnimationConfigManager.class);
+        MenuStateManager menuStateManager = animationConfigManager.getConfig(MenuStateManager.class);
         return menuStateManager.getMenuStateConfig(path);
     }
 
     @Override
-    public void reload() {
-        disable();
+    public void enable() {
         startAnimation();
     }
 
